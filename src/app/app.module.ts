@@ -3,26 +3,26 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/reducers';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app.effects';
 import { environment } from '../environments/environment';
+import { MainComponent } from './main/main.component';
 
 export const AppRoutes: Routes = [
-  { path: '', component: AppComponent },
+  { path: '', component: MainComponent },
 
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule,
     RouterModule.forRoot(
       AppRoutes,
       { enableTracing: true }

@@ -6,10 +6,10 @@ export const environment = {
   production: false,
   firebaseConfig : {
     apiKey: "AIzaSyDh_H3u9dSc7DWd7AFjwtV8Y2CnBuKzimk",
-    authDomain: "writeorpay.firebaseapp.com",
-    databaseURL: "https://writeorpay.firebaseio.com",
-    projectId: "writeorpay",
-    storageBucket: "writeorpay.appspot.com",
+    authDomain: "pixelperfect.firebaseapp.com",
+    databaseURL: "https://pixelperfect.firebaseio.com",
+    projectId: "pixelperfect",
+    storageBucket: "pixelperfect.appspot.com",
     messagingSenderId: "386462008604"
   }
 };

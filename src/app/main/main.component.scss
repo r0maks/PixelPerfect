@@ -1,0 +1,10 @@
+.main-container {
+    display: flex;
+    justify-content: center;
+
+    .grid-container {
+        border: 2px solid black;
+        height: 720px;
+        width: 720px;
+    }
+}

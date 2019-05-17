@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('writeorpay App', () => {
+describe('pixelperfect App', () => {
   let page: AppPage;
 
   beforeEach(() => {
