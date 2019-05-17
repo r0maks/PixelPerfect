@@ -1,0 +1,49 @@
+@import "palette.scss";
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+
+    .actions-header-container {
+        display: flex;
+        flex-direction: row;
+        flex-basis: 100%;
+
+        app-action-header {
+            width: 100%;
+        }
+    }
+
+    .app-content-container {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row;
+    
+        .app-content {
+            margin-left: 25px;
+            transition: width 2s;
+            flex-basis: calc(100% - 300px);           
+
+        }
+    
+        .sidebar-content {
+            width: 300px;
+            transition: ease .3s;
+            position: fixed;
+            right: 0px;
+                    }
+    }
+
+    .app-content-container-expanded {
+    
+        .app-content {
+            flex-basis: calc(100% - 10px);
+        }
+    
+        .sidebar-content {
+            right:-295px;
+        }
+    }
+
+  
+}
