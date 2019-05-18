@@ -1,0 +1,8 @@
+@import "../palette.scss";
+
+.grid-container {
+    height: 720px;
+    width: 720px;
+    border: solid 2px $dark-gray;
+    border-radius: 4px;
+}

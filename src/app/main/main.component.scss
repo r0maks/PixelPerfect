@@ -1,10 +1,13 @@
+@import "../palette.scss";
+
 .main-container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
 
-    .grid-container {
-        border: 2px solid black;
-        height: 720px;
-        width: 720px;
+    .center-container {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
     }
 }

@@ -1,12 +1,12 @@
 import { Action } from '@ngrx/store';
 
-export const TOGGLE_EXPANDER = 'TOGGLE_EXPANDER'
+export const SET_SIZE = 'SET_SIZE'
 
-export class ToggleExpander implements Action {
-  readonly type = TOGGLE_EXPANDER;
-  constructor() { }
+export class SetSize implements Action {
+  readonly type = SET_SIZE;
+  constructor(public size: number) { }
 }
 
 export type AppActions
   = 
-  ToggleExpander 
+  SetSize 

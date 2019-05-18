@@ -7,8 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  public size = 20;
-
   constructor() { }
 
   public ngOnInit() {

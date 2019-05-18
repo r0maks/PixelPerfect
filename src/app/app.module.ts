@@ -9,6 +9,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app.effects';
 import { environment } from '../environments/environment';
 import { MainComponent } from './main/main.component';
+import { GridComponent } from './grid/grid.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 export const AppRoutes: Routes = [
   { path: '', component: MainComponent },
@@ -19,6 +21,8 @@ export const AppRoutes: Routes = [
   declarations: [
     AppComponent,
     MainComponent,
+    GridComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
