@@ -1,7 +1,16 @@
 <div class="grid-container">
-    <div class="grid-row" *ngFor='let rows of pixels | async'>
-        <div class="grid-cell" *ngFor='let cell of rows | async'>
-            
+    <div *ngIf="size !== null" class="grid-pixels">
+        <div class="grid-row" *ngFor='let rows of pixels'>
+            <div class="grid-cell" *ngFor='let cell of rows'>
+
+            </div>
+        </div>
+    </div>
+    <div *ngIf="size === null" class="size-picker-container">
+        <div class="size-option" *ngFor='let size of sizeOptions' (click)="setSize(size)">
+            <div class="size-option-dimension">
+             {{size}} x {{size}}
+            </div>
         </div>
     </div>
 </div>

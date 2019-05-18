@@ -1,8 +1,41 @@
 @import "../palette.scss";
 
 .grid-container {
+    background: $white;
     height: 720px;
     width: 720px;
-    border: solid 2px $dark-gray;
+    border: solid 2px $light-gray;
     border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .grid-pixels {
+        .grid-row {
+            .grid-cell {
+                border: 1px solid $dark-gray;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    .size-picker-container {
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: row;
+
+        .size-option {
+            border-radius: 4px;
+            padding: 15px;
+            color: $white;
+            background: $dark-gray;
+            font-size: 20px;
+
+            &:hover {
+                background: #7f8fa6;
+                cursor: pointer;
+            }
+        }
+    }
 }

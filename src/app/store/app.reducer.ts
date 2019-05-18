@@ -4,10 +4,14 @@ import { ActionReducer, Action } from '@ngrx/store';
 export interface State {
     size: number;
     pixels: Pixel[][]; // entire pixel grid in a 2d array
+    currentColor: string;
+    sizeOptions: number[],
 };
 export const initialState: State = {
-    size: 0,
+    size: null,
     pixels: null,
+    currentColor: null,
+    sizeOptions: [32, 64, 128, 256, 512],
 };
 export const reducer: ActionReducer<State> = (state: State = initialState, action: appActions.AppActions) => {
     switch (action.type) {
@@ -22,6 +26,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             }
             return { 
                 ...state,
+                size: action.size,
                 pixels: pixels
             };
         default:
