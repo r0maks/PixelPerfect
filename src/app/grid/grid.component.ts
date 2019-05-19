@@ -16,6 +16,7 @@ export class GridComponent implements OnInit {
   public size: number;
   public dimension: number;
   public sizeOptions: number[];
+  public appMode: number;
 
   constructor(
     private _store: Store<AppState>,
@@ -28,6 +29,8 @@ export class GridComponent implements OnInit {
       this.dimension = 720 / this.size;
     });
     this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
+    this._store.pipe(select(a => a.appState.appMode)).subscribe(val => this.appMode = val);
+
   }
 
   public setSize(size: number) {

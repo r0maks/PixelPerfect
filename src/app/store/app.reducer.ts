@@ -1,12 +1,19 @@
 import * as appActions from './app.actions';
 import { ActionReducer, Action } from '@ngrx/store';
 
+export enum AppMode {
+    Config = 0,
+    Drawing = 1,
+}
+
 export interface State {
     size: number;
+    previousStates: Pixel[][][];
     pixels: Pixel[][]; // entire pixel grid in a 2d array
     currentColor: string;
     backgroundColor: string;
     sizeOptions: number[],
+    appMode: AppMode;
 };
 export const initialState: State = {
     size: null,
@@ -14,6 +21,8 @@ export const initialState: State = {
     currentColor: '#000',
     backgroundColor: '#fff',
     sizeOptions: [16, 32, 48, 64],
+    appMode: AppMode.Config,
+    previousStates: [],
 
 };
 export const reducer: ActionReducer<State> = (state: State = initialState, action: appActions.AppActions) => {
@@ -30,21 +39,22 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             return {
                 ...state,
                 size: action.size,
-                pixels: pixels1
+                pixels: pixels1,
+                appMode: AppMode.Drawing,
             };
         case appActions.FILL_CELL:
             const pixels = Object.assign([], state.pixels);
             const cell = pixels[action.rowIndex][action.colIndex] as Pixel;
-
-            if (!cell.color) {
-                cell.color = state.currentColor;
-            } else {
-                cell.color = state.backgroundColor;
-            }
-
+            cell.color = state.currentColor;
             return {
                 ...state,
-                pixels: pixels
+                pixels: pixels,
+                previousStates: saveNewState(state.previousStates, pixels),
+            };
+        case appActions.CHANGE_COLOR:
+            return {
+                ...state,
+                currentColor: action.newColor
             };
         default:
             return state;
@@ -54,6 +64,13 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
 export class Pixel {
     public color: string; // hex color of the pixel
 }
+
+function saveNewState(previousStates: any[], newState: Pixel[][]): any[] {
+    const allStates = Object.assign([], previousStates);
+    allStates.push(newState);
+    return allStates;
+}
+
 
 
 

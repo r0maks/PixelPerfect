@@ -4,13 +4,13 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/reducers';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app.effects';
 import { environment } from '../environments/environment';
 import { MainComponent } from './main/main.component';
 import { GridComponent } from './grid/grid.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 export const AppRoutes: Routes = [
   { path: '', component: MainComponent },
@@ -26,7 +26,7 @@ export const AppRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
+    ColorPickerModule,
     RouterModule.forRoot(
       AppRoutes,
       { enableTracing: true }

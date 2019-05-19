@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../store/reducers';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  private _currentColor: string;
+
+  constructor(private _store: Store<AppState>) { }
 
   ngOnInit() {
+    this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
   }
 
 }

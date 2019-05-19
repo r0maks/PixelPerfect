@@ -10,12 +10,15 @@
         display: flex;
         flex-direction: column;
         border: solid 1px $nice-gray;
+        border-radius: 4px;
         .grid-row {
             display: flex;
             flex-direction: row;
             .grid-cell {
                 border: solid 1px $nice-gray;
                 display: flex;
+                cursor: pointer;
+                box-shadow: inset 0 0 2px #ccc;
             }
         }
     }
@@ -24,6 +27,8 @@
         display: flex;
         justify-content: space-evenly;
         flex-direction: row;
+        background: $off-white;
+        width: 720px;
 
         .size-option {
             border-radius: 4px;

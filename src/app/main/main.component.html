@@ -3,7 +3,7 @@
 
   </div>
   <div class="center-container">
-    <app-sidebar></app-sidebar>
+    <app-sidebar *ngIf="appMode === 1"></app-sidebar>
     <app-grid></app-grid>
   </div>
   <div class="footer-container">
