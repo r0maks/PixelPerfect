@@ -14,6 +14,7 @@ export class GridComponent implements OnInit {
 
   public pixels: Pixel[][];
   public size: number;
+  public dimension: number;
   public sizeOptions: number[];
 
   constructor(
@@ -22,13 +23,20 @@ export class GridComponent implements OnInit {
 
   public ngOnInit() {
     this._store.pipe(select(a => a.appState.pixels)).subscribe(val => this.pixels = val);
-    this._store.pipe(select(a => a.appState.size)).subscribe(val => this.size = val);
+    this._store.pipe(select(a => a.appState.size)).subscribe(val => {
+      this.size = val;
+      this.dimension = 720 / this.size;
+    });
     this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
   }
 
   public setSize(size: number) {
     console.log('set size: ' + size);
     this._store.dispatch(new AppActions.SetSize(size));
+  }
+
+  public setColor(rowIndex: number, colIndex: number) {
+    this._store.dispatch(new AppActions.FillCell(rowIndex, colIndex));
   }
 
 }

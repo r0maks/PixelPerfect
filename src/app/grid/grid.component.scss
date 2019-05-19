@@ -2,20 +2,20 @@
 
 .grid-container {
     background: $white;
-    height: 720px;
-    width: 720px;
-    border: solid 2px $light-gray;
-    border-radius: 4px;
     display: flex;
     justify-content: center;
     flex-direction: column;
 
     .grid-pixels {
+        display: flex;
+        flex-direction: column;
+        border: solid 1px $nice-gray;
         .grid-row {
+            display: flex;
+            flex-direction: row;
             .grid-cell {
-                border: 1px solid $dark-gray;
-                width: 40px;
-                height: 40px;
+                border: solid 1px $nice-gray;
+                display: flex;
             }
         }
     }

@@ -5,28 +5,45 @@ export interface State {
     size: number;
     pixels: Pixel[][]; // entire pixel grid in a 2d array
     currentColor: string;
+    backgroundColor: string;
     sizeOptions: number[],
 };
 export const initialState: State = {
     size: null,
     pixels: null,
-    currentColor: null,
-    sizeOptions: [32, 64, 128, 256, 512],
+    currentColor: '#000',
+    backgroundColor: '#fff',
+    sizeOptions: [16, 32, 48, 64],
+
 };
 export const reducer: ActionReducer<State> = (state: State = initialState, action: appActions.AppActions) => {
     switch (action.type) {
         // create pixel grid from the specified size
         case appActions.SET_SIZE:
-            const pixels = new Array<Pixel[]>();
+            const pixels1 = new Array<Pixel[]>();
             for (let rowIndex = 0; rowIndex < action.size; rowIndex++) {
-                pixels[rowIndex] = new Array<Pixel>();
+                pixels1[rowIndex] = new Array<Pixel>();
                 for (let columnIndex = 0; columnIndex < action.size; columnIndex++) {
-                    pixels[rowIndex][columnIndex] = new Pixel();
+                    pixels1[rowIndex][columnIndex] = new Pixel();
                 }
             }
-            return { 
+            return {
                 ...state,
                 size: action.size,
+                pixels: pixels1
+            };
+        case appActions.FILL_CELL:
+            const pixels = Object.assign([], state.pixels);
+            const cell = pixels[action.rowIndex][action.colIndex] as Pixel;
+
+            if (!cell.color) {
+                cell.color = state.currentColor;
+            } else {
+                cell.color = state.backgroundColor;
+            }
+
+            return {
+                ...state,
                 pixels: pixels
             };
         default:
