@@ -11,15 +11,21 @@ import * as AppActions from '../store/app.actions';
 export class SidebarComponent implements OnInit {
 
   private _currentColor: string;
+  private _usedColors: string[];
 
   constructor(private _store: Store<AppState>) { }
 
   ngOnInit() {
     this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
+    this._store.pipe(select(a => a.appState.lastColors)).subscribe(val => this._usedColors = val);
   }
 
   public colorChanged($event: string) {
     this._store.dispatch(new AppActions.ChangeColor($event));
+  }
+
+  public setColor(color: string) {
+    this._store.dispatch(new AppActions.UsePriorColor(color));
   }
 
 }

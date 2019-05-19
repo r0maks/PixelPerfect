@@ -4,6 +4,19 @@
 
     .color-container {
 
+        .used-colors {
+            display: flex;
+            flex-direction: column;
+            padding-top: 2px;
+            .color-tile {
+                min-height: 20px;
+                min-width: 20px;
+                border-radius: 4px;
+                margin: 2px;
+                cursor: pointer;
+            }
+        }
+
         input {
             border: none;
             border-radius: 4px;

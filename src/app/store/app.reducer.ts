@@ -54,17 +54,23 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 previousStates: saveNewState(state.previousStates, pixels),
             };
         case appActions.CHANGE_COLOR:
-
             if (state.currentColor === action.newColor) {
                 return { ...state };
             }
-
             const colors = Object.assign([], state.lastColors);
             colors.push(action.newColor);
             return {
                 ...state,
                 currentColor: action.newColor,
                 lastColors: colors,
+            };
+        case appActions.USE_PRIOR_COLOR:
+            if (state.currentColor === action.color) {
+                return { ...state };
+            }
+            return {
+                ...state,
+                currentColor: action.color,
             };
         default:
             return state;

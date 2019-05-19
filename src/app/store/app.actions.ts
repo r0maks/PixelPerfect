@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 export const SET_SIZE = 'SET_SIZE'
 export const FILL_CELL = 'FILL_CELL';
 export const CHANGE_COLOR = 'CHANGE_COLOR';
+export const USE_PRIOR_COLOR = 'USE_PRIOR_COLOR';
 
 export class SetSize implements Action {
   readonly type = SET_SIZE;
@@ -17,8 +18,14 @@ export class ChangeColor implements Action {
   constructor(public newColor: string) {}
 }
 
+export class UsePriorColor implements Action {
+  readonly type = USE_PRIOR_COLOR;
+  constructor(public color: string) {}
+}
+
 export type AppActions
   = 
   SetSize |
   FillCell |
-  ChangeColor
+  ChangeColor | 
+  UsePriorColor
