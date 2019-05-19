@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../store/reducers';
+import * as AppActions from '../store/app.actions';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,6 +16,10 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
+  }
+
+  public colorChanged($event: string) {
+    this._store.dispatch(new AppActions.ChangeColor($event));
   }
 
 }

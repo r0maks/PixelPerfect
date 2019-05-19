@@ -37,10 +37,10 @@ export class GridComponent implements OnInit {
   }
 
   public setSize(size: number) {
-    console.log('set size: ' + size);
     this._store.dispatch(new AppActions.SetSize(size));
   }
 
+  // TODO don't do this if the same color
   public setColor(rowIndex: number, colIndex: number) {
     this._store.dispatch(new AppActions.FillCell(rowIndex, colIndex));
   }

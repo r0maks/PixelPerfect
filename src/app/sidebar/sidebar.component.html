@@ -1,10 +1,7 @@
 <div class="sidebar-container">
   <div class="color-container">
-    <div class="color-picker" [ngStyle]="{'background': _currentColor}">
-      <div class="color-picker-hex">
-        {{_currentColor}}
-      </div>
-    </div>
+    <div class="current-color">{{_currentColor}}</div>
+    <input [(colorPicker)]="_currentColor" (colorPickerChange)="colorChanged($event)" [style.background]="_currentColor"/>
   </div>
   <div class="control-panel-container">
     <div class="undo-buttons"></div>

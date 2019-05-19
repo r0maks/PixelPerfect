@@ -1,22 +1,15 @@
 .sidebar-container {
     display: flex;
     flex-direction: column;
-    width: 100px;
 
     .color-container {
-        .color-picker {
-            height: 50px;
-            width: 100%;
-            border-radius: 3px;
-            display: flex;
-            justify-content: center;
-            cursor: pointer;
 
-            &-hex {
-                color: rgb(0, 255, 255); 
-                mix-blend-mode: difference;
-                padding: 15px;
-            }
+        input {
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            outline:none;
+            height: 50px;
         }
     }
 }

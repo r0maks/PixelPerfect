@@ -11,6 +11,7 @@ export interface State {
     previousStates: Pixel[][][];
     pixels: Pixel[][]; // entire pixel grid in a 2d array
     currentColor: string;
+    lastColors: string[];
     backgroundColor: string;
     sizeOptions: number[],
     appMode: AppMode;
@@ -19,8 +20,9 @@ export const initialState: State = {
     size: null,
     pixels: null,
     currentColor: '#000',
+    lastColors: ['#000'],
     backgroundColor: '#fff',
-    sizeOptions: [16, 24, 32, 48, 64],
+    sizeOptions: [8, 12, 16, 24, 32, 48, 64],
     appMode: AppMode.Config,
     previousStates: [],
 
@@ -33,7 +35,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             for (let rowIndex = 0; rowIndex < action.size; rowIndex++) {
                 pixels1[rowIndex] = new Array<Pixel>();
                 for (let columnIndex = 0; columnIndex < action.size; columnIndex++) {
-                    pixels1[rowIndex][columnIndex] = new Pixel();
+                    pixels1[rowIndex][columnIndex] = new Pixel(rowIndex + '-' + columnIndex);
                 }
             }
             return {
@@ -52,9 +54,17 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 previousStates: saveNewState(state.previousStates, pixels),
             };
         case appActions.CHANGE_COLOR:
+
+            if (state.currentColor === action.newColor) {
+                return { ...state };
+            }
+
+            const colors = Object.assign([], state.lastColors);
+            colors.push(action.newColor);
             return {
                 ...state,
-                currentColor: action.newColor
+                currentColor: action.newColor,
+                lastColors: colors,
             };
         default:
             return state;
@@ -63,6 +73,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
 
 export class Pixel {
     public color: string; // hex color of the pixel
+    constructor(public id: string) { }
 }
 
 function saveNewState(previousStates: any[], newState: Pixel[][]): any[] {
