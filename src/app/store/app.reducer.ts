@@ -20,7 +20,7 @@ export const initialState: State = {
     pixels: null,
     currentColor: '#000',
     backgroundColor: '#fff',
-    sizeOptions: [16, 32, 48, 64],
+    sizeOptions: [16, 24, 32, 48, 64],
     appMode: AppMode.Config,
     previousStates: [],
 

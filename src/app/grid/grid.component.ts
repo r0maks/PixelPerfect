@@ -14,9 +14,11 @@ export class GridComponent implements OnInit {
 
   public pixels: Pixel[][];
   public size: number;
+  public _currentColor: string;
   public dimension: number;
   public sizeOptions: number[];
   public appMode: number;
+  public hovered: string; // rowIndex-colIndex of what is currently being hovered
 
   constructor(
     private _store: Store<AppState>,
@@ -30,6 +32,7 @@ export class GridComponent implements OnInit {
     });
     this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
     this._store.pipe(select(a => a.appState.appMode)).subscribe(val => this.appMode = val);
+    this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
 
   }
 
