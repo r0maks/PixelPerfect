@@ -4,6 +4,7 @@
             <div class="grid-cell" *ngFor='let cell of rows; let colIndex = index'
                 [ngStyle]="{'width.px': dimension, 'height.px':dimension, 'background' : cell.id === hovered ? _currentColor : cell.color}"
                 (click)="setColor(rowIndex, colIndex)"
+                [ngClass]="{'pixel-hovered': cell.id === hovered}"
                 (mouseover)="hovered = cell.id"
                 (mouseout)="hovered = null">
             </div>
