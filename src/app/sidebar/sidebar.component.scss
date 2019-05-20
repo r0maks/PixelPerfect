@@ -7,13 +7,18 @@
         .used-colors {
             display: flex;
             flex-direction: column;
-            padding-top: 2px;
+            padding-top: 10px;
             .color-tile {
                 min-height: 20px;
                 min-width: 20px;
                 border-radius: 4px;
-                margin: 2px;
+                padding: 5px;
+                margin-bottom: 2px;
                 cursor: pointer;
+                &-text {
+                    mix-blend-mode: difference;
+                    color: white;
+                }
             }
         }
 
@@ -22,7 +27,17 @@
             border-radius: 4px;
             cursor: pointer;
             outline:none;
+            width: 100%;
             height: 50px;
+        }
+    }
+
+    .control-panel-container {
+        .brush-size-slider {
+            display: flex;
+            flex-direction: column;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
     }
 }

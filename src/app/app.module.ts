@@ -11,6 +11,7 @@ import { MainComponent } from './main/main.component';
 import { GridComponent } from './grid/grid.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { FormsModule } from '@angular/forms';
 
 export const AppRoutes: Routes = [
   { path: '', component: MainComponent },
@@ -27,6 +28,7 @@ export const AppRoutes: Routes = [
   imports: [
     BrowserModule,
     ColorPickerModule,
+    FormsModule,
     RouterModule.forRoot(
       AppRoutes,
       { enableTracing: true }

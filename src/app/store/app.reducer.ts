@@ -15,6 +15,8 @@ export interface State {
     backgroundColor: string;
     sizeOptions: number[],
     appMode: AppMode;
+    brushSize: number;
+    brushSizeMax: number;
 };
 export const initialState: State = {
     size: null,
@@ -25,6 +27,8 @@ export const initialState: State = {
     sizeOptions: [8, 12, 16, 24, 32, 48, 64],
     appMode: AppMode.Config,
     previousStates: [],
+    brushSize: 1,
+    brushSizeMax: 8,
 
 };
 export const reducer: ActionReducer<State> = (state: State = initialState, action: appActions.AppActions) => {
@@ -57,7 +61,12 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             if (state.currentColor === action.newColor) {
                 return { ...state };
             }
-            const colors = Object.assign([], state.lastColors);
+            // take the last 9 colors
+            let colors = Object.assign([], state.lastColors);
+            if (state.lastColors.length > 9) {
+                colors = Object.assign([], state.lastColors.slice(1));
+            }
+
             colors.push(action.newColor);
             return {
                 ...state,
@@ -71,6 +80,11 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             return {
                 ...state,
                 currentColor: action.color,
+            };
+        case appActions.BRUSH_SIZE_CHANGED:
+            return {
+                ...state,
+                brushSize: action.size,
             };
         default:
             return state;

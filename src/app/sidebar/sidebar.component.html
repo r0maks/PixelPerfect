@@ -1,22 +1,25 @@
 <div class="sidebar-container">
-  <div class="color-container">
-    <div class="current-color">{{_currentColor}}</div>
-    <input [(colorPicker)]="_currentColor" [cpPosition]="'bottom'" (colorPickerChange)="colorChanged($event)" [style.background]="_currentColor"
-    />
-    <div class="used-colors">
-        <div class="color-tile" *ngFor='let color of _usedColors'
-        [ngStyle]="{'background' : color}"
-        (click)="setColor(color)">
-    </div>
-    </div>
-  </div>
   <div class="control-panel-container">
+    <div class="brush-size-slider">
+      <label>Brush size ({{_brushSize}})</label>
+      <input type="range" id="start" name="volume" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue" (input)="brushSizeChanged($event)">
+    </div>
     <div class="undo-buttons"></div>
     <div class="reset-buttons">
 
     </div>
     <div class="export-button">
 
+    </div>
+  </div>
+  <div class="color-container">
+    <div class="current-color">{{_currentColor}}</div>
+    <input [(colorPicker)]="_currentColor" [cpPosition]="'bottom'" (colorPickerClose)="colorChanged($event)" [style.background]="_currentColor"
+    />
+    <div class="used-colors">
+      <div class="color-tile" *ngFor='let color of _usedColors?.slice()?.reverse()' [ngStyle]="{'background' : color}" (click)="setColor(color)">
+        <span class="color-tile-text">{{color}}</span>
+      </div>
     </div>
   </div>
 </div>
