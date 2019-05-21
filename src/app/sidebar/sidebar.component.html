@@ -1,10 +1,12 @@
 <div class="sidebar-container">
   <div class="control-panel-container">
     <div class="brush-size-slider">
-      <label>Brush size ({{_brushSize}})</label>
+      <label>Brush size ({{_brushSize}}x{{_brushSize}})</label>
       <input type="range" id="start" name="volume" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue" (input)="brushSizeChanged($event)">
     </div>
-    <div class="undo-buttons"></div>
+    <div class="undo-buttons">
+      <button>Undo</button>
+    </div>
     <div class="reset-buttons">
 
     </div>
