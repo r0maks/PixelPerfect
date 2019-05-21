@@ -1,7 +1,8 @@
 <div class="grid-container">
     <div *ngIf="appMode === 1" class="grid-pixels">
         <div class="grid-row" *ngFor='let rows of pixels; let rowIndex = index'>
-            <div class="grid-cell" *ngFor='let cell of rows; let colIndex = index'
+            <div class="grid-cell"
+                *ngFor='let cell of rows; let colIndex = index'
                 [ngStyle]="{'width.px': dimension, 'height.px':dimension, 'background' : cell.id === hovered ? _currentColor : cell.color}"
                 (click)="setColor(rowIndex, colIndex)"
                 [ngClass]="{'pixel-hovered': cell.id === hovered}"

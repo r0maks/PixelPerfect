@@ -39,7 +39,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             for (let rowIndex = 0; rowIndex < action.size; rowIndex++) {
                 pixels1[rowIndex] = new Array<Pixel>();
                 for (let columnIndex = 0; columnIndex < action.size; columnIndex++) {
-                    pixels1[rowIndex][columnIndex] = new Pixel(rowIndex + '-' + columnIndex);
+                    pixels1[rowIndex][columnIndex] = new Pixel(rowIndex + '-' + columnIndex, rowIndex, columnIndex);
                 }
             }
             return {
@@ -50,8 +50,10 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             };
         case appActions.FILL_CELL:
             const pixels = Object.assign([], state.pixels);
-            const cell = pixels[action.rowIndex][action.colIndex] as Pixel;
-            cell.color = state.currentColor;
+            const pixelsToFill = getCellsToFill(pixels, action.rowIndex, action.colIndex, state.brushSize);
+            pixelsToFill.forEach(p => {
+                p.color = state.currentColor;
+            });
             return {
                 ...state,
                 pixels: pixels,
@@ -66,7 +68,6 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             if (state.lastColors.length > 9) {
                 colors = Object.assign([], state.lastColors.slice(1));
             }
-
             colors.push(action.newColor);
             return {
                 ...state,
@@ -93,13 +94,49 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
 
 export class Pixel {
     public color: string; // hex color of the pixel
-    constructor(public id: string) { }
+    constructor(public id: string, public rowIndex: number, public colIndex: number) { }
 }
 
 function saveNewState(previousStates: any[], newState: Pixel[][]): any[] {
     const allStates = Object.assign([], previousStates);
     allStates.push(newState);
     return allStates;
+}
+
+function getCellsToFill(pixels: Pixel[][], rowIndex: number, colIndex: number, brushSize: number): Pixel[] {
+    const range = brushSize - 1;
+    let pixelsToFill = new Array<Pixel>();
+
+    // normal draw
+    if (range === 0) {
+        pixelsToFill.push(pixels[rowIndex][colIndex]);
+    } else {
+        // paint all the way up to the min row
+        let minRowIndex = rowIndex - range;
+        if (minRowIndex < 0) {
+            minRowIndex = 0;
+        }
+        let maxRowIndex = rowIndex;
+
+        // paint all the way right to the maxCol
+        let minColIndex = colIndex;
+        let maxColIndex = colIndex + range;
+        if (maxColIndex > pixels[0].length) {
+            maxColIndex = pixels[0].length - 1;
+        }
+
+        pixels.forEach(element => {
+            element.forEach(p => {
+                if (p.colIndex >= minColIndex && p.colIndex <= maxColIndex 
+                && p.rowIndex >= minRowIndex && p.rowIndex <= maxRowIndex) {
+                    pixelsToFill.push(p);
+                }
+            });
+        });
+        
+    }
+
+    return pixelsToFill;
 }
 
 
