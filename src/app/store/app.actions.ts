@@ -5,6 +5,7 @@ export const FILL_CELL = 'FILL_CELL';
 export const CHANGE_COLOR = 'CHANGE_COLOR';
 export const USE_PRIOR_COLOR = 'USE_PRIOR_COLOR';
 export const BRUSH_SIZE_CHANGED = 'BRUSH_SIZE_CHANGED';
+export const EXPORT_IMAGE = 'EXPORT_IMAGE';
 
 export class SetSize implements Action {
   readonly type = SET_SIZE;
@@ -27,10 +28,15 @@ export class BrushSizeChanged implements Action {
   constructor(public size: number){}
 }
 
+export class ExportImage implements Action {
+  readonly type = EXPORT_IMAGE;
+}
+
 export type AppActions
   = 
   SetSize |
   FillCell |
   ChangeColor | 
   UsePriorColor |
-  BrushSizeChanged
+  BrushSizeChanged |
+  ExportImage

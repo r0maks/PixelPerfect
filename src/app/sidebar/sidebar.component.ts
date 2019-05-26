@@ -36,5 +36,8 @@ export class SidebarComponent implements OnInit {
   public brushSizeChanged(val: any) {
     this._store.dispatch(new AppActions.BrushSizeChanged(this.sliderValue));
   }
+  public export() {
+    this._store.dispatch(new AppActions.ExportImage());
+  }
 
 }

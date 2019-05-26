@@ -1,5 +1,6 @@
 import * as appActions from './app.actions';
 import { ActionReducer, Action } from '@ngrx/store';
+import PNGImage from 'pnglib-es6';
 
 export enum AppMode {
     Config = 0,
@@ -82,6 +83,10 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 ...state,
                 currentColor: action.color,
             };
+        case appActions.EXPORT_IMAGE: {
+            buildImage(state.size, state.pixels);
+            return state;
+        }
         case appActions.BRUSH_SIZE_CHANGED:
             return {
                 ...state,
@@ -101,6 +106,29 @@ function saveNewState(previousStates: any[], newState: Pixel[][]): any[] {
     const allStates = Object.assign([], previousStates);
     allStates.push(newState);
     return allStates;
+}
+
+// Code should probably be in effects
+function buildImage(size: number, pixels: Pixel[][]) {
+
+    // If no third argument, transparent
+    const image = new PNGImage(size, size, 8);
+
+    for (let rowIndex = 0; rowIndex < pixels[0].length; rowIndex++) {
+        const row = pixels[rowIndex];
+
+        for (let colIndex = 0; colIndex < row.length; colIndex++) {
+            const pixel = row[colIndex];
+            const color = image.createColor(pixel.color);
+            image.setPixel(rowIndex, colIndex, color);            
+        }
+    }
+
+    const base64 = image.getBase64();
+    // Or get the data-url which can be passed directly to an <img src>
+    const dataUri = image.getDataURL(); // data:image/png;base64,...
+    // TODO: do something with the data uri
+
 }
 
 function getCellsToFill(pixels: Pixel[][], rowIndex: number, colIndex: number, brushSize: number): Pixel[] {
@@ -127,13 +155,13 @@ function getCellsToFill(pixels: Pixel[][], rowIndex: number, colIndex: number, b
 
         pixels.forEach(element => {
             element.forEach(p => {
-                if (p.colIndex >= minColIndex && p.colIndex <= maxColIndex 
-                && p.rowIndex >= minRowIndex && p.rowIndex <= maxRowIndex) {
+                if (p.colIndex >= minColIndex && p.colIndex <= maxColIndex
+                    && p.rowIndex >= minRowIndex && p.rowIndex <= maxRowIndex) {
                     pixelsToFill.push(p);
                 }
             });
         });
-        
+
     }
 
     return pixelsToFill;

@@ -42,18 +42,18 @@
             padding-bottom: 10px;
         }
 
+        button {
+            width: 100%;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
         .undo-buttons {
             padding-top: 10px;
             padding-bottom: 10px;
             display: flex;
             flex-direction: row;
-
-            button {
-                width: 100%;
-                padding: 5px;
-                border-radius: 4px;
-                font-size: 13px;
-            }
         }
     }
 }
