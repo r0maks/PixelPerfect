@@ -31,7 +31,6 @@ export const initialState: State = {
     previousStates: [],
     brushSize: 1,
     brushSizeMax: 8,
-
 };
 export const reducer: ActionReducer<State> = (state: State = initialState, action: appActions.AppActions) => {
     switch (action.type) {
@@ -54,6 +53,9 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
         case appActions.FILL_CELL:
             const pixels = clone(state.pixels);
             const pixelsToFill = getCellsToFill(pixels, action.rowIndex, action.colIndex, state.brushSize);
+
+            // TODO: don't add history entry if conditions are already met
+
             pixelsToFill.forEach(p => {
                 p.color = state.currentColor;
             });
@@ -97,9 +99,8 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 pixels: lastPixels,
                 previousStates: previousStates
             };
-        case appActions.RESET: {
+        case appActions.RESET:
             return initialState;
-        }
         case appActions.EXPORT_IMAGE: {
             buildImage(state.size, state.pixels);
             return state;
@@ -130,7 +131,6 @@ function saveNewState(previousStates: any[], newState: Pixel[][]): any[] {
 
 // Code should probably be in effects
 function buildImage(size: number, pixels: Pixel[][]) {
-
     // If no third argument, transparent
     const image = new PNGImage(size, size, 8);
 
@@ -183,14 +183,8 @@ function getCellsToFill(pixels: Pixel[][], rowIndex: number, colIndex: number, b
         });
 
     }
-
     return pixelsToFill;
 }
-
 function clone(target: any[]): any[] {
     return _.cloneDeep(target);
 }
-
-
-
-

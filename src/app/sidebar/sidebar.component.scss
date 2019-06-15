@@ -1,6 +1,11 @@
+@import "../palette.scss"; 
+
 .sidebar-container {
     display: flex;
     flex-direction: column;
+    border-radius: 4px;
+    border: solid 1px $nice-gray;
+    padding: 6px;
 
     .color-container {
         display: grid;
@@ -49,11 +54,29 @@
             padding: 5px;
             border-radius: 4px;
             font-size: 13px;
+            color: white;
+            border: none;
+            height: 30px;
         }
 
         .undo-buttons {
             display: flex;
             flex-direction: row;
+
+            button {
+                background: #f1c40f;
+            }
+        }
+
+        .reset-buttons {
+            button {
+                background: #e74c3c
+            };
+        }
+        .export-button {
+            button {
+                background: #34495e;
+            }
         }
     }
 }

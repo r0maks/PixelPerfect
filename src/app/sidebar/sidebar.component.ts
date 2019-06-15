@@ -45,5 +45,4 @@ export class SidebarComponent implements OnInit {
   public reset() {
     this._store.dispatch(new AppActions.Reset());
   }
-
 }
