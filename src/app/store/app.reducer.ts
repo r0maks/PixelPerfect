@@ -1,6 +1,7 @@
 import * as appActions from './app.actions';
 import { ActionReducer, Action } from '@ngrx/store';
 import PNGImage from 'pnglib-es6';
+import * as _ from 'lodash';
 
 export enum AppMode {
     Config = 0,
@@ -40,7 +41,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             for (let rowIndex = 0; rowIndex < action.size; rowIndex++) {
                 pixels1[rowIndex] = new Array<Pixel>();
                 for (let columnIndex = 0; columnIndex < action.size; columnIndex++) {
-                    pixels1[rowIndex][columnIndex] = new Pixel(rowIndex + '-' + columnIndex, rowIndex, columnIndex);
+                    pixels1[rowIndex][columnIndex] = new Pixel(rowIndex, columnIndex);
                 }
             }
             return {
@@ -48,9 +49,10 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 size: action.size,
                 pixels: pixels1,
                 appMode: AppMode.Drawing,
+                previousStates: saveNewState(state.previousStates, pixels1),
             };
         case appActions.FILL_CELL:
-            const pixels = Object.assign([], state.pixels);
+            const pixels = clone(state.pixels);
             const pixelsToFill = getCellsToFill(pixels, action.rowIndex, action.colIndex, state.brushSize);
             pixelsToFill.forEach(p => {
                 p.color = state.currentColor;
@@ -65,9 +67,9 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 return { ...state };
             }
             // take the last 9 colors
-            let colors = Object.assign([], state.lastColors);
+            let colors = clone(state.lastColors);
             if (state.lastColors.length > 9) {
-                colors = Object.assign([], state.lastColors.slice(1));
+                colors = clone(state.lastColors.slice(1));
             }
             colors.push(action.newColor);
             return {
@@ -82,6 +84,18 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             return {
                 ...state,
                 currentColor: action.color,
+            };
+        case appActions.UNDO:
+            let lastPixels = clone(state.pixels);
+            let previousStates = clone(state.previousStates);
+            if (previousStates.length && previousStates.length > 1) {
+                lastPixels = clone(previousStates[previousStates.length - 2]);
+                previousStates = _.dropRight(previousStates);
+            }
+            return {
+                ...state,
+                pixels: lastPixels,
+                previousStates: previousStates
             };
         case appActions.EXPORT_IMAGE: {
             buildImage(state.size, state.pixels);
@@ -99,12 +113,15 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
 
 export class Pixel {
     public color: string; // hex color of the pixel
-    constructor(public id: string, public rowIndex: number, public colIndex: number) { }
+    public id: string;
+    constructor(public rowIndex: number, public colIndex: number) {
+        this.id = rowIndex + '-' + colIndex;
+    }
 }
 
 function saveNewState(previousStates: any[], newState: Pixel[][]): any[] {
-    const allStates = Object.assign([], previousStates);
-    allStates.push(newState);
+    const allStates = clone(previousStates);
+    allStates.push(clone(newState));
     return allStates;
 }
 
@@ -120,7 +137,7 @@ function buildImage(size: number, pixels: Pixel[][]) {
         for (let colIndex = 0; colIndex < row.length; colIndex++) {
             const pixel = row[colIndex];
             const color = image.createColor(pixel.color);
-            image.setPixel(rowIndex, colIndex, color);            
+            image.setPixel(rowIndex, colIndex, color);
         }
     }
 
@@ -165,6 +182,10 @@ function getCellsToFill(pixels: Pixel[][], rowIndex: number, colIndex: number, b
     }
 
     return pixelsToFill;
+}
+
+function clone(target: any[]): any[] {
+    return _.cloneDeep(target);
 }
 
 

@@ -5,7 +5,7 @@
       <input type="range" id="start" name="volume" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue" (input)="brushSizeChanged($event)">
     </div>
     <div class="undo-buttons">
-      <button>Undo</button>
+      <button (click)="undo()">Undo</button>
     </div>
     <div class="reset-buttons">
 

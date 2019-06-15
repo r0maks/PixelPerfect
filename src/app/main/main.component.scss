@@ -4,16 +4,13 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-
     .header-container {
         height: 30px;
     }
-
     .center-container {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-
         app-sidebar {
             margin-right: 10px;
         }
