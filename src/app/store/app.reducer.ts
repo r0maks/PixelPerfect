@@ -97,6 +97,9 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 pixels: lastPixels,
                 previousStates: previousStates
             };
+        case appActions.RESET: {
+            return initialState;
+        }
         case appActions.EXPORT_IMAGE: {
             buildImage(state.size, state.pixels);
             return state;

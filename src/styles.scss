@@ -8,5 +8,18 @@ body {
     font-style: normal;
 }
 
+.shadow-box {
+    box-shadow: 0 1px 3px rgba(0,0,0,.125);
+    transition: all .5s ease;
+    &:hover {
+        box-shadow: 0 12px 75px rgba(0,0,0,.125) !important;
+        transform: translate3D(0,-1px,0) !important;
+    }
+}
+
+button {
+    cursor: pointer;
+}
+
 
 

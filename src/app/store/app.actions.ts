@@ -7,6 +7,7 @@ export const USE_PRIOR_COLOR = 'USE_PRIOR_COLOR';
 export const BRUSH_SIZE_CHANGED = 'BRUSH_SIZE_CHANGED';
 export const EXPORT_IMAGE = 'EXPORT_IMAGE';
 export const UNDO = 'UNDO';
+export const RESET = 'RESET';
 
 export class SetSize implements Action {
   readonly type = SET_SIZE;
@@ -34,6 +35,9 @@ export class ExportImage implements Action {
 export class Undo implements Action {
   readonly type = UNDO;
 }
+export class Reset implements Action  {
+  readonly type = RESET;
+}
 
 export type AppActions
   = 
@@ -43,4 +47,5 @@ export type AppActions
   UsePriorColor |
   BrushSizeChanged |
   ExportImage |
-  Undo
+  Undo |
+  Reset

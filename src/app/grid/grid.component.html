@@ -13,7 +13,7 @@
         {{hovered}}
     </div>
     <div *ngIf="appMode === 0" class="size-picker-container">
-        <div class="size-option" *ngFor='let size of sizeOptions' (click)="setSize(size)">
+        <div class="size-option shadow-box" *ngFor='let size of sizeOptions' (click)="setSize(size)">
             <div class="size-option-dimension">
                 {{size}} x {{size}}
             </div>

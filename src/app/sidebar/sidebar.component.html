@@ -8,7 +8,7 @@
       <button (click)="undo()">Undo</button>
     </div>
     <div class="reset-buttons">
-
+      <button (click)="reset()">Reset</button>
     </div>
     <div class="export-button">
         <button (click)="export()">Export</button>
@@ -19,7 +19,7 @@
     <input [(colorPicker)]="_currentColor" [cpPosition]="'bottom'" (colorPickerClose)="colorChanged($event)" [style.background]="_currentColor"
     />
     <div class="used-colors">
-      <div class="color-tile" *ngFor='let color of _usedColors?.slice()?.reverse()' [ngStyle]="{'background' : color}" (click)="setColor(color)">
+      <div class="color-tile shadow-box" *ngFor='let color of _usedColors?.slice()?.reverse()' [ngStyle]="{'background' : color}" (click)="setColor(color)">
         <span class="color-tile-text">{{color}}</span>
       </div>
     </div>

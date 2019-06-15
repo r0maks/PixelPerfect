@@ -42,5 +42,8 @@ export class SidebarComponent implements OnInit {
   public undo() {
     this._store.dispatch(new AppActions.Undo());
   }
+  public reset() {
+    this._store.dispatch(new AppActions.Reset());
+  }
 
 }
