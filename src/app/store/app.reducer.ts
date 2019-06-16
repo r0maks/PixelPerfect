@@ -26,7 +26,7 @@ export const initialState: State = {
     currentColor: '#000',
     lastColors: ['#000'],
     backgroundColor: '#fff',
-    sizeOptions: [8, 12, 16, 24, 32, 48, 64],
+    sizeOptions: [8, 12, 16, 24, 32, 48, 64, 72],
     appMode: AppMode.Config,
     previousStates: [],
     brushSize: 1,
