@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { Pixel } from './app.reducer';
 
 export const SET_SIZE = 'SET_SIZE'
 export const FILL_CELL = 'FILL_CELL';
@@ -15,7 +16,7 @@ export class SetSize implements Action {
 }
 export class FillCell implements Action {
   readonly type = FILL_CELL;
-  constructor(public rowIndex: number, public colIndex: number) { }
+  constructor(public pixel: Pixel) { }
 }
 export class ChangeColor implements Action {
   readonly type = CHANGE_COLOR;

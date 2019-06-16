@@ -11,7 +11,7 @@ export enum AppMode {
 export interface State {
     size: number;
     previousStates: Pixel[][][];
-    pixels: Pixel[][]; // entire pixel grid in a 2d array
+    pixels: Pixel[]; // entire pixel grid in a 2d array
     currentColor: string;
     lastColors: string[];
     backgroundColor: string;
@@ -36,11 +36,10 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
     switch (action.type) {
         // create pixel grid from the specified size
         case appActions.SET_SIZE:
-            const pixels1 = new Array<Pixel[]>();
+            const pixels1 = new Array<Pixel>();
             for (let rowIndex = 0; rowIndex < action.size; rowIndex++) {
-                pixels1[rowIndex] = new Array<Pixel>();
                 for (let columnIndex = 0; columnIndex < action.size; columnIndex++) {
-                    pixels1[rowIndex][columnIndex] = new Pixel(rowIndex, columnIndex);
+                    pixels1.push(new Pixel(rowIndex, columnIndex));
                 }
             }
             return {
@@ -52,13 +51,10 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             };
         case appActions.FILL_CELL:
             const pixels = clone(state.pixels);
-            const pixelsToFill = getCellsToFill(pixels, action.rowIndex, action.colIndex, state.brushSize);
-
-            // TODO: don't add history entry if conditions are already met
-
-            pixelsToFill.forEach(p => {
-                p.color = state.currentColor;
-            });
+            const pixelsToFill = getCellsToFill(pixels, action.pixel, state.brushSize);
+            for (var i = 0, len = pixelsToFill.length; i < len; i++) {
+                pixelsToFill[i].color = state.currentColor;
+            }
             return {
                 ...state,
                 pixels: pixels,
@@ -102,7 +98,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
         case appActions.RESET:
             return initialState;
         case appActions.EXPORT_IMAGE: {
-            buildImage(state.size, state.pixels);
+            // buildImage(state.size, state.pixels);
             return state;
         }
         case appActions.BRUSH_SIZE_CHANGED:
@@ -123,7 +119,7 @@ export class Pixel {
     }
 }
 
-function saveNewState(previousStates: any[], newState: Pixel[][]): any[] {
+function saveNewState(previousStates: any[], newState: Pixel[]): any[] {
     const allStates = clone(previousStates);
     allStates.push(clone(newState));
     return allStates;
@@ -151,38 +147,26 @@ function buildImage(size: number, pixels: Pixel[][]) {
 
 }
 
-function getCellsToFill(pixels: Pixel[][], rowIndex: number, colIndex: number, brushSize: number): Pixel[] {
+function getCellsToFill(pixels: Pixel[], pixel: Pixel, brushSize: number): Pixel[] {
     const range = brushSize - 1;
     let pixelsToFill = new Array<Pixel>();
 
     // normal draw
     if (range === 0) {
-        pixelsToFill.push(pixels[rowIndex][colIndex]);
+        pixelsToFill.push(pixels.find(a => a.id === pixel.id));
     } else {
-        // paint all the way up to the min row
-        let minRowIndex = rowIndex - range;
-        if (minRowIndex < 0) {
-            minRowIndex = 0;
-        }
-        let maxRowIndex = rowIndex;
-
-        // paint all the way right to the maxCol
-        let minColIndex = colIndex;
-        let maxColIndex = colIndex + range;
-        if (maxColIndex > pixels[0].length) {
-            maxColIndex = pixels[0].length - 1;
-        }
-
-        pixels.forEach(element => {
-            element.forEach(p => {
-                if (p.colIndex >= minColIndex && p.colIndex <= maxColIndex
-                    && p.rowIndex >= minRowIndex && p.rowIndex <= maxRowIndex) {
-                    pixelsToFill.push(p);
-                }
-            });
+        const minCol = pixel.colIndex;
+        const maxRow = pixel.rowIndex;
+        const minRow = maxRow - range;
+        const maxCol = minCol + range;
+        pixels.forEach(p => {
+            if (p.colIndex >= minCol && p.colIndex <= maxCol
+                && p.rowIndex >= minRow && p.rowIndex <= maxRow) {
+                pixelsToFill.push(p);
+            }
         });
-
     }
+
     return pixelsToFill;
 }
 function clone(target: any[]): any[] {

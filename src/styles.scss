@@ -17,6 +17,9 @@ body {
 }
 button {
     cursor: pointer;
+    &:focus {
+        outline:0;
+    }
 }
 
 /* The Modal (background) */

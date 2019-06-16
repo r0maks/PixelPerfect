@@ -2,30 +2,22 @@
 
 .grid-container {
     background: $white;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+    border-radius: 4px;
+    display: grid;
 
     .grid-pixels {
-        display: flex;
-        flex-direction: column;
+        display: grid;
         border: solid 1px $nice-gray;
         border-radius: 4px;
-        .grid-row {
-            display: flex;
-            flex-direction: row;
             .grid-cell {
                 display: flex;
                 cursor: pointer;
                 box-shadow: inset 0 0 1px $nice-gray;
             }
-
             .pixel-hovered {
                 box-shadow: inset 0 0 10px $nice-gray;
             }
-        }
     }
-
     .size-picker-container {
         display: flex;
         justify-content: space-evenly;

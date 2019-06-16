@@ -1,16 +1,14 @@
 <div class="grid-container">
-    <div *ngIf="appMode === 1" class="grid-pixels">
-        <div class="grid-row" *ngFor='let rows of pixels; let rowIndex = index; trackBy: rowIndex;'>
+    <div class="grid-pixels" #pixelGrid [ngStyle]="{'display' : appMode === 1 ? 'grid' : 'none'}">
             <div class="grid-cell"
-                *ngFor='let cell of rows; let colIndex = index; trackBy: colIndex'
+                *ngFor='let cell of pixels; let colIndex = index; trackBy: trackByFn'
+                id="{{cell?.id}}"
                 [ngStyle]="{'width.px': dimension, 'height.px':dimension, 'background' : cell.id === hovered ? _currentColor : cell.color}"
-                (click)="setColor(rowIndex, colIndex)"
+                (click)="setColor(cell)"
                 [ngClass]="{'pixel-hovered': cell.id === hovered}"
                 (mouseover)="hovered = cell.id"
                 (mouseout)="hovered = null">
             </div>
-        </div>
-        {{hovered}}
     </div>
     <div *ngIf="appMode === 0" class="size-picker-container">
         <div class="size-option shadow-box" *ngFor='let size of sizeOptions' (click)="setSize(size)">

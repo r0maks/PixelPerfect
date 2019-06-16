@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { Observable } from 'rxjs';
@@ -11,14 +11,16 @@ import * as AppActions from '../store/app.actions';
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent implements OnInit {
+  @ViewChild('pixelGrid') pixelGrid: ElementRef;
 
-  public pixels: Pixel[][];
+  public pixels: Pixel[];
   public size: number;
   public _currentColor: string;
   public dimension: number;
   public sizeOptions: number[];
   public appMode: number;
   public hovered: string; // rowIndex-colIndex of what is currently being hovered
+  public hoveredPixels: any;
 
   constructor(
     private _store: Store<AppState>,
@@ -29,6 +31,9 @@ export class GridComponent implements OnInit {
     this._store.pipe(select(a => a.appState.size)).subscribe(val => {
       this.size = val;
       this.dimension = 720 / this.size;
+      if (this.pixelGrid && this.pixelGrid.nativeElement) {
+        this.pixelGrid.nativeElement.style = 'grid-template-columns: repeat('+ this.size +',1fr)'
+      }
     });
     this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
     this._store.pipe(select(a => a.appState.appMode)).subscribe(val => this.appMode = val);
@@ -41,8 +46,12 @@ export class GridComponent implements OnInit {
   }
 
   // TODO don't do this if the same color
-  public setColor(rowIndex: number, colIndex: number) {
-    this._store.dispatch(new AppActions.FillCell(rowIndex, colIndex));
+  public setColor(pixel: Pixel) {
+    this._store.dispatch(new AppActions.FillCell(pixel));
+  }
+
+  public trackByFn(index, item) {
+    return index;
   }
 
 }

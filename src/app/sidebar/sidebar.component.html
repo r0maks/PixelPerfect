@@ -5,14 +5,14 @@
       <input type="range" id="start" name="volume" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue" (input)="brushSizeChanged($event)">
     </div>
     <div class="undo-buttons">
-      <button (click)="undo()">Undo <i class="fas fa-undo"></i></button>
+      <button class="shadow-box" (click)="undo()">Undo <i class="fas fa-undo"></i></button>
     </div>
     <div class="reset-buttons">
-      <button (click)="reset()">Reset <i class="fas fa-eraser"></i>
+      <button class="shadow-box" (click)="reset()">Reset <i class="fas fa-eraser"></i>
       </button>
     </div>
     <div class="export-button">
-        <button (click)="export()">Export <i class="fas fa-file-export"></i></button>
+        <button class="shadow-box" (click)="export()">Export <i class="fas fa-file-export"></i></button>
     </div>
   </div>
   <div class="color-container">
