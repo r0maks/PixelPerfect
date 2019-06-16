@@ -11,7 +11,7 @@ import * as AppActions from '../store/app.actions';
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent implements OnInit {
-  @ViewChild('pixelGrid') pixelGrid: ElementRef;
+  @ViewChild('pixelGrid', {static: false}) pixelGrid: ElementRef;
 
   public pixels: Pixel[];
   public size: number;
