@@ -3,11 +3,10 @@
             <div class="grid-cell"
                 *ngFor='let cell of pixels; let colIndex = index; trackBy: trackByFn'
                 id="{{cell?.id}}"
-                [ngStyle]="{'width.px': dimension, 'height.px':dimension, 'background' : cell.id === hovered ? _currentColor : cell.color}"
+                [ngStyle]="{'width.px': dimension, 'height.px':dimension, 'background' : isHovered(cell.id) ? _currentColor : cell.color}"
                 (click)="setColor(cell)"
-                [ngClass]="{'pixel-hovered': cell.id === hovered}"
-                (mouseover)="hovered = cell.id"
-                (mouseout)="hovered = null">
+                (mouseover)="hovered(cell)"
+                (mouseout)="hoveredPixels = {};">
             </div>
     </div>
     <div *ngIf="appMode === 0" class="size-picker-container">

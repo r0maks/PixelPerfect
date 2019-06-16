@@ -15,11 +15,11 @@ export class GridComponent implements OnInit {
 
   public pixels: Pixel[];
   public size: number;
+  public brushSize: number;
   public _currentColor: string;
   public dimension: number;
   public sizeOptions: number[];
   public appMode: number;
-  public hovered: string; // rowIndex-colIndex of what is currently being hovered
   public hoveredPixels: any;
 
   constructor(
@@ -27,6 +27,7 @@ export class GridComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
+    this.hoveredPixels = {};
     this._store.pipe(select(a => a.appState.pixels)).subscribe(val => this.pixels = val);
     this._store.pipe(select(a => a.appState.size)).subscribe(val => {
       this.size = val;
@@ -38,6 +39,7 @@ export class GridComponent implements OnInit {
     this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
     this._store.pipe(select(a => a.appState.appMode)).subscribe(val => this.appMode = val);
     this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
+    this._store.pipe(select(a => a.appState.brushSize)).subscribe(val => this.brushSize = val);
 
   }
 
@@ -48,6 +50,25 @@ export class GridComponent implements OnInit {
   // TODO don't do this if the same color
   public setColor(pixel: Pixel) {
     this._store.dispatch(new AppActions.FillCell(pixel));
+  }
+
+  public hovered(pixel: Pixel) {
+    this.hoveredPixels = {};
+    const range = this.brushSize - 1;
+    const minCol = pixel.colIndex;
+    const maxRow = pixel.rowIndex;
+    const minRow = maxRow - range;
+    const maxCol = minCol + range;
+    this.pixels.forEach(p => {
+        if (p.colIndex >= minCol && p.colIndex <= maxCol
+            && p.rowIndex >= minRow && p.rowIndex <= maxRow) {
+            this.hoveredPixels[p.id] = true;
+        }
+    });
+  }
+
+  public isHovered(id: string): boolean {
+    return this.hoveredPixels[id];
   }
 
   public trackByFn(index, item) {
