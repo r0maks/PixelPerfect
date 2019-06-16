@@ -9,6 +9,7 @@
         display: grid;
         border: solid 1px $nice-gray;
         border-radius: 4px;
+        box-shadow: 0 12px 75px rgba(0,0,0,.125);
             .grid-cell {
                 display: flex;
                 cursor: pointer;
