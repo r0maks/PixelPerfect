@@ -21,6 +21,7 @@ export class GridComponent implements OnInit {
   public sizeOptions: number[];
   public appMode: number;
   public hoveredPixels: any;
+  public focusedPixelId: string;
 
   constructor(
     private _store: Store<AppState>,
@@ -54,6 +55,7 @@ export class GridComponent implements OnInit {
 
   public hovered(pixel: Pixel) {
     this.hoveredPixels = {};
+    this.focusedPixelId = pixel.id;
     const range = this.brushSize - 1;
     const minCol = pixel.colIndex;
     const maxRow = pixel.rowIndex;
@@ -69,6 +71,11 @@ export class GridComponent implements OnInit {
 
   public isHovered(id: string): boolean {
     return this.hoveredPixels[id];
+  }
+
+  public hoverStopped() {
+    this.hoveredPixels = {};
+    this.focusedPixelId = null;
   }
 
   public trackByFn(index, item) {
