@@ -3,7 +3,7 @@
 .grid-container {
     background: $white;
     border-radius: 4px;
-    display: grid;
+    display: flex;
 
     .grid-pixels {
         display: grid;
@@ -20,11 +20,10 @@
             }
     }
     .size-picker-container {
-        display: flex;
-        justify-content: space-evenly;
-        flex-direction: row;
-        background: $off-white;
-        width: 720px;
+        display: grid;
+        background: #f5f6fa;
+        grid-gap: 10px;
+        grid-template-columns: auto auto auto auto auto auto auto;
 
         .size-option {
             border-radius: 4px;
@@ -32,6 +31,7 @@
             color: $white;
             background: $dark-gray;
             font-size: 20px;
+            text-align: center;            
 
             &:hover {
                 background: #7f8fa6;
