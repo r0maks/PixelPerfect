@@ -2,11 +2,48 @@
 @import "/app/palette.scss";
 
 body {
-    background: $off-white;
+    background-color: #eee;
     font-family: menco, sans-serif;
     font-weight: 300;
     font-style: normal;
+    margin: 0px;
+    // display: flex;
+    // justify-content: center;
 }
+main {
+    padding: 5px;
+    min-height: 420px;
+    word-wrap: break-word;
+    max-width: 1160px;
+    margin: 0 auto;
+}
+.page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+app-root {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+footer {
+    text-align: center;
+    border-top: 1px solid #ddd;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    color: #2b2b2b;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 989;
+}
+
+/////// Global styles
 .shadow-box {
     box-shadow: 0 1px 3px rgba(0,0,0,.125);
     transition: all .5s ease;
@@ -76,6 +113,13 @@ modal {
 body.modal-open {
     /* body overflow is hidden to hide main scrollbar when modal window is open */
     overflow: hidden;
+}
+
+
+.color-picker {
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.125);
+    border: none;
 }
 
 
