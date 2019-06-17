@@ -18,6 +18,7 @@ export class GridComponent implements OnInit {
   public brushSize: number;
   public _currentColor: string;
   public dimension: number;
+  private _gridSize: number;
   public sizeOptions: number[];
   public appMode: number;
   public hoveredPixels: any;
@@ -29,10 +30,14 @@ export class GridComponent implements OnInit {
 
   public ngOnInit() {
     this.hoveredPixels = {};
+    this._store.pipe(select(a => a.appState.gridSize)).subscribe(val => {
+      this._gridSize = val;
+      this.dimension = this._gridSize / this.size;
+    });
     this._store.pipe(select(a => a.appState.pixels)).subscribe(val => this.pixels = val);
     this._store.pipe(select(a => a.appState.size)).subscribe(val => {
       this.size = val;
-      this.dimension = 720 / this.size;
+      this.dimension = this._gridSize / this.size;
       if (this.pixelGrid && this.pixelGrid.nativeElement) {
         this.pixelGrid.nativeElement.style = 'grid-template-columns: repeat('+ this.size +',1fr)'
       }

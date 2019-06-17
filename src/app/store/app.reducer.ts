@@ -16,6 +16,7 @@ export interface State {
     lastColors: string[];
     backgroundColor: string;
     sizeOptions: number[],
+    gridSize: number,
     appMode: AppMode;
     brushSize: number;
     brushSizeMax: number;
@@ -28,6 +29,7 @@ export const initialState: State = {
     lastColors: ['#000'],
     backgroundColor: '#fff',
     sizeOptions: [8, 12, 16, 24, 32, 48, 64],
+    gridSize: 720,
     appMode: AppMode.Config,
     previousStates: [],
     brushSize: 1,
@@ -118,6 +120,18 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 ... state,
                 colorPickerOpen: false
             };
+        case appActions.WINDOW_RESIZED: {
+            let newSize = 720;
+            if (action.height > action.width) {
+                newSize = action.width * .7;
+            } else {
+                newSize = action.height * .8;
+            }
+            return {
+                ... state,
+                gridSize: newSize
+            };
+        }
         default:
             return state;
     }
