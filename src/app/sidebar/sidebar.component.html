@@ -26,3 +26,21 @@
     </div>
   </div>
 </div>
+
+
+<modal id="reset-confirm-modal">
+  <div class="modal">
+      <div class="modal-body">
+          <div class="reset-modal-container">
+              <i class="fas fa-exclamation-circle"></i>
+                <span class="reset-text">Are you sure you want to reset? 
+                <br>All current progress will be lost.</span>
+                <div class="reset-options">
+                    <button class="reset-button" (click)="confirmReset()">Reset</button>
+                    <button class="cancel-button" (click)="closeConfirmModal()">Cancel</button>
+                </div>
+          </div>
+      </div>
+  </div>
+  <div class="modal-background"></div>
+</modal>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import * as AppActions from '../store/app.actions';
+import { ModalService } from '../modal.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,7 +17,7 @@ export class SidebarComponent implements OnInit {
   private _gridSize: number;
   public sliderValue: number;
 
-  constructor(private _store: Store<AppState>) { }
+  constructor(private _store: Store<AppState>, private _modalService: ModalService) { }
 
   ngOnInit() {
     this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
@@ -43,6 +44,13 @@ export class SidebarComponent implements OnInit {
     this._store.dispatch(new AppActions.Undo());
   }
   public reset() {
+    this._modalService.open('reset-confirm-modal');
+  }
+  public confirmReset() {
+    this.closeConfirmModal();
     this._store.dispatch(new AppActions.Reset());
+  }
+  public closeConfirmModal() {
+    this._modalService.close('reset-confirm-modal');
   }
 }

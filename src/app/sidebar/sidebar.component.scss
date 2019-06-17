@@ -50,16 +50,6 @@
             flex-direction: column;
         }
 
-        button {
-            width: 100%;
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 13px;
-            color: white;
-            border: none;
-            height: 30px;
-        }
-
         .undo-buttons {
             display: flex;
             flex-direction: row;
@@ -78,6 +68,37 @@
             button {
                 background: #34495e;
             }
+        }
+    }
+}
+
+.reset-modal-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 28px;
+
+    .fas {
+        color: #f39c12;
+    }
+
+    .reset-text {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        line-height: 100%;
+        font-size: 24px;
+        font-weight: 200;
+    }
+
+    .reset-options {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 10px;
+        .reset-button {
+            background-color: #e74c3c;
+        }
+        .cancel-button {
+            background-color: #34495e;
         }
     }
 }

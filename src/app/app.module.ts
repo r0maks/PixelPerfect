@@ -12,6 +12,8 @@ import { GridComponent } from './grid/grid.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule } from '@angular/forms';
+import { ModalComponent } from './modal/modal.component';
+import { ModalService } from './modal.service';
 
 export const AppRoutes: Routes = [
   { path: '', component: MainComponent },
@@ -24,6 +26,7 @@ export const AppRoutes: Routes = [
     MainComponent,
     GridComponent,
     SidebarComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ export const AppRoutes: Routes = [
     ]),
   ],
   providers: [
+    ModalService
   ],
   bootstrap: [AppComponent]
 })
