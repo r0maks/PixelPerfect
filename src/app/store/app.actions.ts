@@ -9,6 +9,8 @@ export const BRUSH_SIZE_CHANGED = 'BRUSH_SIZE_CHANGED';
 export const EXPORT_IMAGE = 'EXPORT_IMAGE';
 export const UNDO = 'UNDO';
 export const RESET = 'RESET';
+export const COLOR_PICKER_OPEN = 'COLOR_PICKER_OPEN';
+export const COLOR_PICKER_CLOSED = 'COLOR_PICKER_CLOSED';
 
 export class SetSize implements Action {
   readonly type = SET_SIZE;
@@ -39,6 +41,12 @@ export class Undo implements Action {
 export class Reset implements Action  {
   readonly type = RESET;
 }
+export class ColorPickerOpen implements Action {
+  readonly type = COLOR_PICKER_OPEN;
+}
+export class ColorPickerClosed implements Action {
+  readonly type = COLOR_PICKER_CLOSED;
+}
 
 export type AppActions
   = 
@@ -49,4 +57,6 @@ export type AppActions
   BrushSizeChanged |
   ExportImage |
   Undo |
-  Reset
+  Reset |
+  ColorPickerOpen | 
+  ColorPickerClosed

@@ -19,6 +19,7 @@ export interface State {
     appMode: AppMode;
     brushSize: number;
     brushSizeMax: number;
+    colorPickerOpen: boolean;
 };
 export const initialState: State = {
     size: null,
@@ -31,6 +32,7 @@ export const initialState: State = {
     previousStates: [],
     brushSize: 1,
     brushSizeMax: 8,
+    colorPickerOpen: false,
 };
 export const reducer: ActionReducer<State> = (state: State = initialState, action: appActions.AppActions) => {
     switch (action.type) {
@@ -105,6 +107,16 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             return {
                 ...state,
                 brushSize: action.size,
+            };
+        case appActions.COLOR_PICKER_OPEN: 
+            return {
+                ... state,
+                colorPickerOpen: true
+            };
+        case appActions.COLOR_PICKER_CLOSED: 
+            return {
+                ... state,
+                colorPickerOpen: false
             };
         default:
             return state;

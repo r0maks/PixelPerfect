@@ -16,6 +16,7 @@ export class SidebarComponent implements OnInit {
   private _brushSize: number;
   private _gridSize: number;
   public sliderValue: number;
+  private _colorPickerOpen: boolean;
 
   constructor(private _store: Store<AppState>, private _modalService: ModalService) { }
 
@@ -27,9 +28,17 @@ export class SidebarComponent implements OnInit {
       this.sliderValue = val;
     });
     this._store.pipe(select(a => a.appState.size)).subscribe(val => this._gridSize = val);
+    this._store.pipe(select(a => a.appState.colorPickerOpen)).subscribe(val => this._colorPickerOpen = val);
   }
   public colorChanged($event: string) {
     this._store.dispatch(new AppActions.ChangeColor($event));
+  }
+  public pickerState($event: boolean) {
+    if ($event) {
+      this._store.dispatch(new AppActions.ColorPickerOpen());
+    } else {
+      this._store.dispatch(new AppActions.ColorPickerClosed());
+    }
   }
   public setColor(color: string) {
     this._store.dispatch(new AppActions.UsePriorColor(color));
