@@ -31,6 +31,15 @@ header {
     height: 50px;
     background: $red;
     margin-bottom: 15px;
+
+    .header-container {
+        max-width: 1160px;
+        margin: 0 auto;
+        font-size: 30px;
+        font-weight: 600;
+        color: #ecf0f1;
+        display: flex;
+    }
 }
 
 footer {
