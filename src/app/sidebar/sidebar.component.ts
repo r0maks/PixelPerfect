@@ -17,18 +17,22 @@ export class SidebarComponent implements OnInit {
   private _gridSize: number;
   public sliderValue: number;
   private _colorPickerOpen: boolean;
+  public canUndo: boolean;
+  public canRedo: boolean;
 
   constructor(private _store: Store<AppState>, private _modalService: ModalService) { }
 
   ngOnInit() {
     this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
-    this._store.pipe(select(a => a.appState.lastColors)).subscribe(val => this._usedColors = val);
+    this._store.pipe(select(a => a.appState.palette)).subscribe(val => this._usedColors = val);
     this._store.pipe(select(a => a.appState.brushSize)).subscribe(val => { 
       this._brushSize = val;
       this.sliderValue = val;
     });
     this._store.pipe(select(a => a.appState.size)).subscribe(val => this._gridSize = val);
     this._store.pipe(select(a => a.appState.colorPickerOpen)).subscribe(val => this._colorPickerOpen = val);
+    this._store.pipe(select(a => a.appState.historyIndex)).subscribe(val => this.canUndo = val == 0 ? false : true);
+    this._store.pipe(select(a => a.appState.historyIndex < a.appState.previousStates.length - 1)).subscribe(val => this.canRedo = val);
   }
   public colorChanged($event: string) {
     this._store.dispatch(new AppActions.ChangeColor($event));
@@ -51,6 +55,9 @@ export class SidebarComponent implements OnInit {
   }
   public undo() {
     this._store.dispatch(new AppActions.Undo());
+  }
+  public redo() {
+    this._store.dispatch(new AppActions.Redo());
   }
   public reset() {
     this._modalService.open('reset-confirm-modal');

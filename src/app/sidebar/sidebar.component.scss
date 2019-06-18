@@ -60,11 +60,15 @@
         }
 
         .undo-buttons {
-            display: flex;
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-gap: 4px;
 
-            button {
+            .undo-button {
                 background: #f1c40f;
+            }
+            .redo-button {
+                background: #2ecc71;
             }
         }
 

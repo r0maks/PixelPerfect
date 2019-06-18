@@ -11,16 +11,16 @@ import * as AppActions from '../store/app.actions';
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent implements OnInit, AfterViewInit {
-  @ViewChild('pixelGrid', {static: false}) pixelGrid: ElementRef;
+  @ViewChild('pixelGrid', { static: false }) pixelGrid: ElementRef;
 
   public pixels: Pixel[];
   public size: number;
   public brushSize: number;
   public _currentColor: string;
+  public appMode: number;
   public dimension: number;
   private _gridSize: number;
   public sizeOptions: number[];
-  public appMode: number;
   public hoveredPixels: any;
   public focusedPixelId: string;
 
@@ -30,15 +30,11 @@ export class GridComponent implements OnInit, AfterViewInit {
 
   public ngOnInit() {
     this.hoveredPixels = {};
-    this._store.pipe(select(a => a.appState.gridSize)).subscribe(val => {
-      this._gridSize = val;
-      this.dimension = this._gridSize / this.size;
-    });
     this._store.pipe(select(a => a.appState.pixels)).subscribe(val => this.pixels = val);
     this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
-    this._store.pipe(select(a => a.appState.appMode)).subscribe(val => this.appMode = val);
     this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
     this._store.pipe(select(a => a.appState.brushSize)).subscribe(val => this.brushSize = val);
+    this._store.pipe(select(a => a.appState.appMode)).subscribe(appMode => {this.appMode = appMode});
   }
 
   public ngAfterViewInit() {
@@ -46,7 +42,17 @@ export class GridComponent implements OnInit, AfterViewInit {
       this.size = val;
       this.dimension = this._gridSize / this.size;
       if (this.pixelGrid && this.pixelGrid.nativeElement) {
-        this.pixelGrid.nativeElement.style = 'grid-template-columns: repeat('+ this.size +',1fr)'
+        this.pixelGrid.nativeElement.style = 'grid-template-columns: repeat(' + this.size + ',1fr)'
+      }
+    });
+    this._store.pipe(select(a => a.appState.gridSize)).subscribe(val => {
+      this._gridSize = val;
+      this.dimension = this._gridSize / this.size;
+    });
+    this._store.pipe(select(a => a.appState.appMode)).subscribe(appMode => {
+      this.appMode = appMode;
+      if (this.pixelGrid && this.pixelGrid.nativeElement ) {
+        this.pixelGrid.nativeElement.style.display = (appMode === 1 ? 'grid' : 'none');
       }
     });
   }
@@ -69,10 +75,10 @@ export class GridComponent implements OnInit, AfterViewInit {
     const minRow = maxRow - range;
     const maxCol = minCol + range;
     this.pixels.forEach(p => {
-        if (p.colIndex >= minCol && p.colIndex <= maxCol
-            && p.rowIndex >= minRow && p.rowIndex <= maxRow) {
-            this.hoveredPixels[p.id] = true;
-        }
+      if (p.colIndex >= minCol && p.colIndex <= maxCol
+        && p.rowIndex >= minRow && p.rowIndex <= maxRow) {
+        this.hoveredPixels[p.id] = true;
+      }
     });
   }
 
