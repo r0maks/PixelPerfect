@@ -61,7 +61,7 @@
 
         .undo-buttons {
             display: grid;
-            grid-template-columns: auto auto;
+            grid-template-columns: 65px 65px;
             grid-gap: 4px;
 
             .undo-button {
@@ -73,12 +73,13 @@
         }
 
         .reset-buttons {
-            button {
-                background: #e74c3c
-            };
-        }
-        .export-button {
-            button {
+            display: grid;
+            grid-template-columns: 65px 65px;
+            grid-gap: 4px;
+            .reset-button {
+                background: #e74c3c;
+            }
+            .export-button {
                 background: #34495e;
             }
         }

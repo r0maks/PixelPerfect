@@ -9,11 +9,9 @@
       <button class="shadow-box redo-button" [disabled]="!canRedo" (click)="redo()"><i class="fas fa-redo"></i></button>
     </div>
     <div class="reset-buttons">
-      <button class="shadow-box" (click)="reset()">Reset <i class="fas fa-trash"></i>
+      <button class="shadow-box reset-button" (click)="reset()"><i class="fas fa-trash"></i>
       </button>
-    </div>
-    <div class="export-button">
-        <button class="shadow-box" (click)="export()">Export <i class="fas fa-file-export"></i></button>
+      <button class="shadow-box export-button" (click)="export()"><i class="fas fa-file-export"></i></button>
     </div>
   </div>
   <div class="color-container">
