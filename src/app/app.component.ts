@@ -16,7 +16,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     this._store.dispatch(new AppActions.WindowResized(window.innerHeight, window.innerWidth));
   }
   ngOnInit() {
-
     // TODO -- probbaly could be in a better place
     this._store.pipe(select(a => a.appState)).subscribe(val => {
       localStorage.setItem('state', JSON.stringify(val));
