@@ -110,17 +110,17 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 ...state,
                 brushSize: action.size,
             };
-        case appActions.COLOR_PICKER_OPEN: 
+        case appActions.COLOR_PICKER_OPEN:
             return {
-                ... state,
+                ...state,
                 colorPickerOpen: true
             };
-        case appActions.COLOR_PICKER_CLOSED: 
+        case appActions.COLOR_PICKER_CLOSED:
             return {
-                ... state,
+                ...state,
                 colorPickerOpen: false
             };
-        case appActions.WINDOW_RESIZED: {
+        case appActions.WINDOW_RESIZED:
             let newSize = 720;
             if (action.height > action.width) {
                 newSize = action.width * .7;
@@ -128,12 +128,17 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 newSize = action.height * .8;
             }
             return {
-                ... state,
+                ...state,
                 gridSize: newSize
             };
-        }
-    default:
-            return state;
+        default:
+            if (retrieveState()) {
+                var newState = JSON.parse(retrieveState())
+                return newState
+            }
+            else {
+                return state;
+            }
     }
 };
 
@@ -170,7 +175,6 @@ function buildImage(size: number, pixels: Pixel[][]) {
     // Or get the data-url which can be passed directly to an <img src>
     const dataUri = image.getDataURL(); // data:image/png;base64,...
     // TODO: do something with the data uri
-
 }
 
 function getCellsToFill(pixels: Pixel[], pixel: Pixel, brushSize: number): Pixel[] {
@@ -197,4 +201,8 @@ function getCellsToFill(pixels: Pixel[], pixel: Pixel, brushSize: number): Pixel
 }
 function clone(target: any[]): any[] {
     return _.cloneDeep(target);
+}
+
+function retrieveState(): string {
+    return localStorage.getItem('state');
 }

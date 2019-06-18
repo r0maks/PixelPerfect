@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import * as AppActions from '../store/app.actions';
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss']
 })
-export class GridComponent implements OnInit {
+export class GridComponent implements OnInit, AfterViewInit {
   @ViewChild('pixelGrid', {static: false}) pixelGrid: ElementRef;
 
   public pixels: Pixel[];
@@ -35,6 +35,13 @@ export class GridComponent implements OnInit {
       this.dimension = this._gridSize / this.size;
     });
     this._store.pipe(select(a => a.appState.pixels)).subscribe(val => this.pixels = val);
+    this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
+    this._store.pipe(select(a => a.appState.appMode)).subscribe(val => this.appMode = val);
+    this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
+    this._store.pipe(select(a => a.appState.brushSize)).subscribe(val => this.brushSize = val);
+  }
+
+  public ngAfterViewInit() {
     this._store.pipe(select(a => a.appState.size)).subscribe(val => {
       this.size = val;
       this.dimension = this._gridSize / this.size;
@@ -42,11 +49,6 @@ export class GridComponent implements OnInit {
         this.pixelGrid.nativeElement.style = 'grid-template-columns: repeat('+ this.size +',1fr)'
       }
     });
-    this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
-    this._store.pipe(select(a => a.appState.appMode)).subscribe(val => this.appMode = val);
-    this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
-    this._store.pipe(select(a => a.appState.brushSize)).subscribe(val => this.brushSize = val);
-
   }
 
   public setSize(size: number) {
