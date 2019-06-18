@@ -34,7 +34,7 @@ export class GridComponent implements OnInit, AfterViewInit {
     this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
     this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
     this._store.pipe(select(a => a.appState.brushSize)).subscribe(val => this.brushSize = val);
-    this._store.pipe(select(a => a.appState.appMode)).subscribe(appMode => {this.appMode = appMode});
+    this._store.pipe(select(a => a.appState.appMode)).subscribe(appMode => { this.appMode = appMode });
   }
 
   public ngAfterViewInit() {
@@ -51,7 +51,7 @@ export class GridComponent implements OnInit, AfterViewInit {
     });
     this._store.pipe(select(a => a.appState.appMode)).subscribe(appMode => {
       this.appMode = appMode;
-      if (this.pixelGrid && this.pixelGrid.nativeElement ) {
+      if (this.pixelGrid && this.pixelGrid.nativeElement) {
         this.pixelGrid.nativeElement.style.display = (appMode === 1 ? 'grid' : 'none');
       }
     });
@@ -74,12 +74,13 @@ export class GridComponent implements OnInit, AfterViewInit {
     const maxRow = pixel.rowIndex;
     const minRow = maxRow - range;
     const maxCol = minCol + range;
-    this.pixels.forEach(p => {
+    for (var i = 0, len = this.pixels.length; i < len; i++) {
+      const p = this.pixels[i];
       if (p.colIndex >= minCol && p.colIndex <= maxCol
         && p.rowIndex >= minRow && p.rowIndex <= maxRow) {
         this.hoveredPixels[p.id] = true;
       }
-    });
+    }
   }
 
   public isHovered(id: string): boolean {
