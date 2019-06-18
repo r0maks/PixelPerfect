@@ -132,7 +132,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 gridSize: newSize
             };
         }
-        default:
+    default:
             return state;
     }
 };
