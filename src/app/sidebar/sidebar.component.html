@@ -5,10 +5,11 @@
       <input type="range" id="start" name="volume" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue" (input)="brushSizeChanged($event)">
     </div>
     <div class="undo-buttons">
-      <button class="shadow-box" (click)="undo()">Undo <i class="fas fa-undo"></i></button>
+      <button class="shadow-box undo-button" [disabled]="!canUndo" (click)="undo()"><i class="fas fa-undo"></i></button>
+      <button class="shadow-box redo-button" [disabled]="!canRedo" (click)="redo()"><i class="fas fa-redo"></i></button>
     </div>
     <div class="reset-buttons">
-      <button class="shadow-box" (click)="reset()">Reset <i class="fas fa-eraser"></i>
+      <button class="shadow-box" (click)="reset()">Reset <i class="fas fa-trash"></i>
       </button>
     </div>
     <div class="export-button">
@@ -16,8 +17,8 @@
     </div>
   </div>
   <div class="color-container">
-    <div class="current-color">{{_currentColor}}</div>
-    <div class="color-picker-box" [(colorPicker)]="_currentColor" (cpToggleChange)="pickerState($event)" [cpPosition]="'bottom'" (colorPickerClose)="colorChanged($event)" [style.background]="_currentColor">
+    <!-- <div class="current-color">{{_currentColor}}</div> -->
+    <div class="color-picker-box shadow-box" [(colorPicker)]="_currentColor" (cpToggleChange)="pickerState($event)" [cpPosition]="'bottom'" (colorPickerClose)="colorChanged($event)" [style.background]="_currentColor">
       <i *ngIf="!_colorPickerOpen" class="fas fa-palette"></i>
       <span *ngIf="_colorPickerOpen"><i class="fas fa-times"></i> Close</span>
     </div>
@@ -30,7 +31,6 @@
   </div>
 </div>
 
-
 <modal id="reset-confirm-modal">
   <div class="modal">
       <div class="modal-body">
@@ -39,8 +39,8 @@
                 <span class="reset-text">Are you sure you want to reset? 
                 <br>All current progress will be lost.</span>
                 <div class="reset-options">
-                    <button class="reset-button" (click)="confirmReset()">Reset</button>
-                    <button class="cancel-button" (click)="closeConfirmModal()">Cancel</button>
+                    <button class="reset-button shadow-box" (click)="confirmReset()">Reset</button>
+                    <button class="cancel-button shadow-box" (click)="closeConfirmModal()">Cancel</button>
                 </div>
           </div>
       </div>

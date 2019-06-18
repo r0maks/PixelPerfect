@@ -47,8 +47,7 @@ footer {
     border-top: 1px solid #ddd;
     width: 100%;
     text-align: center;
-    padding: 10px 0;
-    margin-top: 20px;
+    padding: 5px 0;
     color: #2b2b2b;
     background: #fff;
     position: absolute;
@@ -71,7 +70,6 @@ button {
     &:focus {
         outline:0;
     }
-
     width: 100%;
     padding: 5px;
     border-radius: 4px;
@@ -79,6 +77,14 @@ button {
     color: white;
     border: none;
     height: 40px;
+    &:disabled {
+        background-color: #bdc3c7;
+        color: rgba(255, 255, 255, 0.75);
+        opacity: 0.7;
+        filter: "alpha(opacity=70)";
+        cursor: not-allowed;
+        transform: none;
+    }
 }
 
 /* MODAL STYLES

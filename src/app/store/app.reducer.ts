@@ -10,10 +10,11 @@ export enum AppMode {
 
 export interface State {
     size: number;
-    previousStates: Pixel[][][];
+    previousStates: Pixel[][];
+    historyIndex: number;
     pixels: Pixel[]; // entire pixel grid in a 2d array
     currentColor: string;
-    lastColors: string[];
+    palette: string[];
     backgroundColor: string;
     sizeOptions: number[],
     gridSize: number,
@@ -26,12 +27,13 @@ export const initialState: State = {
     size: null,
     pixels: null,
     currentColor: '#000',
-    lastColors: ['#000'],
+    palette: ['#000'],
     backgroundColor: '#fff',
     sizeOptions: [8, 12, 16, 24, 32, 48, 64],
     gridSize: 720,
     appMode: 0,
     previousStates: [],
+    historyIndex: 0,
     brushSize: 1,
     brushSizeMax: 8,
     colorPickerOpen: false,
@@ -59,25 +61,35 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             for (var i = 0, len = pixelsToFill.length; i < len; i++) {
                 pixelsToFill[i].color = state.currentColor;
             }
+
+            let prevStates = clone(state.previousStates);
+            // cut the previous states at current index and save the new state on top
+            const numToDrop = (state.previousStates.length - 1) - state.historyIndex;
+
+            if (numToDrop > 0) {
+                prevStates = _.dropRight(prevStates, numToDrop);
+            }
+
             return {
                 ...state,
                 pixels: pixels,
-                previousStates: saveNewState(state.previousStates, pixels),
+                previousStates: saveNewState(prevStates, pixels),
+                historyIndex: state.historyIndex + 1,
             };
         case appActions.CHANGE_COLOR:
             if (state.currentColor === action.newColor) {
                 return { ...state };
             }
             // take the last 9 colors
-            let colors = clone(state.lastColors);
-            if (state.lastColors.length > 9) {
-                colors = clone(state.lastColors.slice(1));
+            let colors = clone(state.palette);
+            if (state.palette.length > 9) {
+                colors = clone(state.palette.slice(1));
             }
             colors.push(action.newColor);
             return {
                 ...state,
                 currentColor: action.newColor,
-                lastColors: colors,
+                palette: colors,
             };
         case appActions.USE_PRIOR_COLOR:
             if (state.currentColor === action.color) {
@@ -88,16 +100,28 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 currentColor: action.color,
             };
         case appActions.UNDO:
+            let thisIndex = state.historyIndex;
             let lastPixels = clone(state.pixels);
-            let previousStates = clone(state.previousStates);
-            if (previousStates.length && previousStates.length > 1) {
-                lastPixels = clone(previousStates[previousStates.length - 2]);
-                previousStates = _.dropRight(previousStates);
+            if (thisIndex > 0) {
+                thisIndex = thisIndex - 1;
+                lastPixels = clone(state.previousStates[thisIndex]);
             }
             return {
                 ...state,
                 pixels: lastPixels,
-                previousStates: previousStates
+                historyIndex: thisIndex
+            };
+        case appActions.REDO:
+            let currentIndex = state.historyIndex;
+            let redoPixels = clone(state.pixels);
+            if (currentIndex < state.previousStates.length - 1) {
+                currentIndex = currentIndex + 1;
+                redoPixels = clone(state.previousStates[currentIndex]);
+            }
+            return {
+                ...state,
+                pixels: redoPixels,
+                historyIndex: currentIndex
             };
         case appActions.RESET:
             return initialState;
