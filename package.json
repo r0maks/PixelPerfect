@@ -28,6 +28,7 @@
     "core-js": "^2.6.9",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "file-saver": "^2.0.2",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "ngx-color-picker": "^7.5.0",

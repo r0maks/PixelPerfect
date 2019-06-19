@@ -1,7 +1,7 @@
 import * as appActions from './app.actions';
 import { ActionReducer, Action } from '@ngrx/store';
-import PNGImage from 'pnglib-es6';
 import * as _ from 'lodash';
+import { saveAs } from 'file-saver';
 
 export enum AppMode {
     Config = 0,
@@ -26,8 +26,8 @@ export interface State {
 export const initialState: State = {
     size: null,
     pixels: null,
-    currentColor: '#000',
-    palette: ['#000'],
+    currentColor: '#000000',
+    palette: ['#000000'],
     backgroundColor: '#fff',
     sizeOptions: [8, 12, 16, 24, 32, 48, 64],
     gridSize: 720,
@@ -126,7 +126,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
         case appActions.RESET:
             return initialState;
         case appActions.EXPORT_IMAGE: {
-            // buildImage(state.size, state.pixels);
+            buildImage(state.size, state.pixels);
             return state;
         }
         case appActions.BRUSH_SIZE_CHANGED:
@@ -181,24 +181,56 @@ function saveNewState(previousStates: any[], newState: Pixel[]): any[] {
 }
 
 // Code should probably be in effects
-function buildImage(size: number, pixels: Pixel[][]) {
-    // If no third argument, transparent
-    const image = new PNGImage(size, size, 8);
+function buildImage(size: number, pixels: Pixel[]) {
+    var canvas = document.createElement('canvas');
+    canvas.height = size;
+    canvas.width = size;
+    // getting the context will allow to manipulate the image
+    var context = canvas.getContext("2d");
 
-    for (let rowIndex = 0; rowIndex < pixels[0].length; rowIndex++) {
-        const row = pixels[rowIndex];
-
-        for (let colIndex = 0; colIndex < row.length; colIndex++) {
-            const pixel = row[colIndex];
-            const color = image.createColor(pixel.color);
-            image.setPixel(rowIndex, colIndex, color);
+    // We create a new imageData.
+    var imageData = context.createImageData(size, size);
+    // The property data will contain an array of int8
+    var data = imageData.data;
+    for (var i = 0; i < size * size; i++) {
+        const p = pixels[i];
+        const rgb = hexToRgb(p.color);
+        data[i * 4 + 0] = rgb.r; // Red
+        data[i * 4 + 1] = rgb.g; // Green
+        data[i * 4 + 2] = rgb.b; // Blue
+        data[i * 4 + 3] = 255; // alpha (transparency)
+    }
+    // we put this random image in the context
+    context.putImageData(imageData, 0, 0); // at coords 0,0
+    var pngData = createData("png","image/png");
+    saveAs(pngData.value as any);
+    function createData(type, mimetype) {
+        var value=canvas.toDataURL(mimetype);
+        if (value.indexOf(mimetype)>0) { // we check if the format is supported
+            return {
+                type:type,
+                value:value
+            }
         }
     }
+}
 
-    const base64 = image.getBase64();
-    // Or get the data-url which can be passed directly to an <img src>
-    const dataUri = image.getDataURL(); // data:image/png;base64,...
-    // TODO: do something with the data uri
+function hexToRgb(hex) {
+    // default is white
+    const defaultColor = {
+        r: 255,
+        g: 255,
+        b: 255,
+    };
+    if (!hex) {
+        defaultColor;
+    }
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : defaultColor;
 }
 
 function getCellsToFill(pixels: Pixel[], pixel: Pixel, brushSize: number): Pixel[] {
@@ -220,13 +252,11 @@ function getCellsToFill(pixels: Pixel[], pixel: Pixel, brushSize: number): Pixel
             }
         });
     }
-
     return pixelsToFill;
 }
 function clone(target: any[]): any[] {
     return _.cloneDeep(target);
 }
-
 function retrieveState(): string {
     return localStorage.getItem('state');
 }
