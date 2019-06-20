@@ -20,7 +20,6 @@ export interface State {
     gridSize: number,
     appMode: AppMode;
     brushSize: number;
-    brushSizeMax: number;
     colorPickerOpen: boolean;
 };
 export const initialState: State = {
@@ -35,7 +34,6 @@ export const initialState: State = {
     previousStates: [],
     historyIndex: 0,
     brushSize: 1,
-    brushSizeMax: 8,
     colorPickerOpen: false,
 };
 export const reducer: ActionReducer<State> = (state: State = initialState, action: appActions.AppActions) => {
