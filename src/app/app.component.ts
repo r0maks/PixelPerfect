@@ -9,20 +9,19 @@ import * as AppActions from './store/app.actions';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit, OnInit {
+export class AppComponent implements AfterViewInit {
   title = 'app';
   constructor(private _store: Store<AppState>) { }
   ngAfterViewInit() {
     this._store.dispatch(new AppActions.WindowResized(window.innerHeight, window.innerWidth));
   }
-  ngOnInit() {
-    // TODO -- probbaly could be in a better place
-    this._store.pipe(select(a => a.appState)).subscribe(val => {
-      localStorage.setItem('state', JSON.stringify(val));
-    });
-  }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this._store.dispatch(new AppActions.WindowResized(event.target.innerHeight, event.target.innerWidth));
+  }
+  // Dispatch an event to save the state upon tab close
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler($event) {
+    this._store.dispatch(new AppActions.AppClosed());
   }
 }

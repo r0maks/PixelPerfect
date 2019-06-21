@@ -14,6 +14,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from './modal/modal.component';
 import { ModalService } from './modal.service';
+import { LZStringModule, LZStringService } from 'ng-lz-string';
 
 export const AppRoutes: Routes = [
   { path: '', component: MainComponent },
@@ -36,13 +37,15 @@ export const AppRoutes: Routes = [
       AppRoutes,
       { enableTracing: true }
     ),
+    LZStringModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
       AppEffects
     ]),
   ],
   providers: [
-    ModalService
+    ModalService,
+    LZStringService
   ],
   bootstrap: [AppComponent]
 })

@@ -44,6 +44,7 @@
     "file-saver": "^2.0.2",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
+    "ng-lz-string": "^1.5.3",
     "ngx-color-picker": "^7.5.0",
     "node-sass": "^4.12.0",
     "pnglib-es6": "^1.0.1",

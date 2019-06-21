@@ -2,6 +2,8 @@ import * as appActions from './app.actions';
 import { ActionReducer, Action } from '@ngrx/store';
 import * as _ from 'lodash';
 import { saveAs } from 'file-saver';
+import { LZStringService } from 'ng-lz-string';
+import { AppState } from './reducers';
 
 export enum AppMode {
     Config = 0,
@@ -46,13 +48,13 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                     pixels1.push(new Pixel(rowIndex, columnIndex));
                 }
             }
-            return {
+            return returnState({
                 ...state,
                 size: action.size,
                 pixels: pixels1,
                 appMode: AppMode.Drawing,
                 previousStates: saveNewState(state.previousStates, pixels1),
-            };
+            });
         case appActions.FILL_CELL:
             const pixels = clone(state.pixels);
             const pixelsToFill = getCellsToFill(pixels, action.pixel, state.brushSize);
@@ -68,12 +70,12 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 prevStates = _.dropRight(prevStates, numToDrop);
             }
 
-            return {
+            return returnState({
                 ...state,
                 pixels: pixels,
                 previousStates: saveNewState(prevStates, pixels),
                 historyIndex: state.historyIndex + 1,
-            };
+            });
         case appActions.CHANGE_COLOR:
             if (state.currentColor === action.newColor) {
                 return { ...state };
@@ -84,19 +86,19 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 colors = clone(state.palette.slice(1));
             }
             colors.push(action.newColor);
-            return {
+            return returnState({
                 ...state,
                 currentColor: action.newColor,
                 palette: colors,
-            };
+            });
         case appActions.USE_PRIOR_COLOR:
             if (state.currentColor === action.color) {
                 return { ...state };
             }
-            return {
+            return returnState({
                 ...state,
                 currentColor: action.color,
-            };
+            });
         case appActions.UNDO:
             let thisIndex = state.historyIndex;
             let lastPixels = clone(state.pixels);
@@ -104,11 +106,11 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 thisIndex = thisIndex - 1;
                 lastPixels = clone(state.previousStates[thisIndex]);
             }
-            return {
+            return returnState({
                 ...state,
                 pixels: lastPixels,
                 historyIndex: thisIndex
-            };
+            });
         case appActions.REDO:
             let currentIndex = state.historyIndex;
             let redoPixels = clone(state.pixels);
@@ -116,32 +118,32 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 currentIndex = currentIndex + 1;
                 redoPixels = clone(state.previousStates[currentIndex]);
             }
-            return {
+            return returnState({
                 ...state,
                 pixels: redoPixels,
                 historyIndex: currentIndex
-            };
+            });
         case appActions.RESET:
-            return initialState;
+            return returnState(initialState);
         case appActions.EXPORT_IMAGE: {
             buildImage(state.size, state.pixels);
-            return state;
+            return returnState(state);
         }
         case appActions.BRUSH_SIZE_CHANGED:
-            return {
+            return returnState({
                 ...state,
                 brushSize: action.size,
-            };
+            });
         case appActions.COLOR_PICKER_OPEN:
-            return {
+            return returnState({
                 ...state,
                 colorPickerOpen: true
-            };
+            });
         case appActions.COLOR_PICKER_CLOSED:
-            return {
+            return returnState({
                 ...state,
                 colorPickerOpen: false
-            };
+            });
         case appActions.WINDOW_RESIZED:
             let newSize = 720;
             if (action.height > action.width) {
@@ -149,13 +151,16 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             } else {
                 newSize = action.height * .8;
             }
-            return {
+            return returnState({
                 ...state,
                 gridSize: newSize
-            };
+            });
+        case appActions.APP_CLOSED: 
+            returnAndPreserveState(state);
         default:
             if (retrieveState()) {
-                var newState = JSON.parse(retrieveState())
+                const svc = new LZStringService();
+                var newState = JSON.parse(svc.decompress(retrieveState()));
                 return newState
             }
             else {
@@ -200,14 +205,14 @@ function buildImage(size: number, pixels: Pixel[]) {
     }
     // we put this random image in the context
     context.putImageData(imageData, 0, 0); // at coords 0,0
-    var pngData = createData("png","image/png");
+    var pngData = createData("png", "image/png");
     saveAs(pngData.value as any);
     function createData(type, mimetype) {
-        var value=canvas.toDataURL(mimetype);
-        if (value.indexOf(mimetype)>0) { // we check if the format is supported
+        var value = canvas.toDataURL(mimetype);
+        if (value.indexOf(mimetype) > 0) { // we check if the format is supported
             return {
-                type:type,
-                value:value
+                type: type,
+                value: value
             }
         }
     }
@@ -257,4 +262,12 @@ function clone(target: any[]): any[] {
 }
 function retrieveState(): string {
     return localStorage.getItem('state');
+}
+function returnState(state: State): State {
+    return state;
+}
+function returnAndPreserveState(state: State): State {
+    const svc = new LZStringService();
+    localStorage.setItem('state', svc.compress(JSON.stringify(state)));
+    return state;
 }

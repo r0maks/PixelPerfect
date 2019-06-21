@@ -13,6 +13,7 @@ export const RESET = 'RESET';
 export const COLOR_PICKER_OPEN = 'COLOR_PICKER_OPEN';
 export const COLOR_PICKER_CLOSED = 'COLOR_PICKER_CLOSED';
 export const WINDOW_RESIZED = 'WINDOW_RESIZED';
+export const APP_CLOSED = 'APP_CLOSED';
 
 export class SetSize implements Action {
   readonly type = SET_SIZE;
@@ -56,6 +57,9 @@ export class WindowResized implements Action {
   readonly type = WINDOW_RESIZED;
   constructor(public height: number, public width: number) {}
 }
+export class AppClosed implements Action {
+  readonly type = APP_CLOSED;
+}
 
 export type AppActions
   = 
@@ -70,4 +74,5 @@ export type AppActions
   Reset |
   ColorPickerOpen | 
   ColorPickerClosed |
-  WindowResized
+  WindowResized | 
+  AppClosed
