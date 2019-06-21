@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { Observable } from 'rxjs';
@@ -26,6 +26,7 @@ export class GridComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _store: Store<AppState>,
+    private _changeDetectionRef: ChangeDetectorRef
   ) { }
 
   public ngOnInit() {
@@ -55,6 +56,7 @@ export class GridComponent implements OnInit, AfterViewInit {
         this.pixelGrid.nativeElement.style.display = (appMode === 1 ? 'grid' : 'none');
       }
     });
+    this._changeDetectionRef.detectChanges();
   }
 
   public setSize(size: number) {
