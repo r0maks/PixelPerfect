@@ -4,13 +4,15 @@ import { AppState } from '../store/reducers';
 import { Observable } from 'rxjs';
 import { Pixel } from '../store/app.reducer';
 import * as AppActions from '../store/app.actions';
+import { Destroyable } from '../destroyable';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss']
 })
-export class GridComponent implements OnInit, AfterViewInit {
+export class GridComponent extends Destroyable implements OnInit, AfterViewInit {
   @ViewChild('pixelGrid', { static: false }) pixelGrid: ElementRef;
 
   public pixels: Pixel[];
@@ -27,30 +29,32 @@ export class GridComponent implements OnInit, AfterViewInit {
   constructor(
     private _store: Store<AppState>,
     private _changeDetectionRef: ChangeDetectorRef
-  ) { }
+  ) {
+    super();
+  }
 
   public ngOnInit() {
     this.hoveredPixels = {};
-    this._store.pipe(select(a => a.appState.pixels)).subscribe(val => this.pixels = val);
-    this._store.pipe(select(a => a.appState.sizeOptions)).subscribe(val => this.sizeOptions = val);
-    this._store.pipe(select(a => a.appState.currentColor)).subscribe(val => this._currentColor = val);
-    this._store.pipe(select(a => a.appState.brushSize)).subscribe(val => this.brushSize = val);
-    this._store.pipe(select(a => a.appState.appMode)).subscribe(appMode => { this.appMode = appMode });
+    this._store.pipe(select(a => a.appState.pixels), takeUntil(this._destroy$)).subscribe(val => this.pixels = val);
+    this._store.pipe(select(a => a.appState.sizeOptions), takeUntil(this._destroy$)).subscribe(val => this.sizeOptions = val);
+    this._store.pipe(select(a => a.appState.currentColor), takeUntil(this._destroy$)).subscribe(val => this._currentColor = val);
+    this._store.pipe(select(a => a.appState.brushSize), takeUntil(this._destroy$)).subscribe(val => this.brushSize = val);
+    this._store.pipe(select(a => a.appState.appMode), takeUntil(this._destroy$)).subscribe(appMode => { this.appMode = appMode });
   }
 
   public ngAfterViewInit() {
-    this._store.pipe(select(a => a.appState.size)).subscribe(val => {
+    this._store.pipe(select(a => a.appState.size), takeUntil(this._destroy$)).subscribe(val => {
       this.size = val;
       this.dimension = this._gridSize / this.size;
       if (this.pixelGrid && this.pixelGrid.nativeElement) {
         this.pixelGrid.nativeElement.style = 'grid-template-columns: repeat(' + this.size + ',1fr)'
       }
     });
-    this._store.pipe(select(a => a.appState.gridSize)).subscribe(val => {
+    this._store.pipe(select(a => a.appState.gridSize), takeUntil(this._destroy$)).subscribe(val => {
       this._gridSize = val;
       this.dimension = this._gridSize / this.size;
     });
-    this._store.pipe(select(a => a.appState.appMode)).subscribe(appMode => {
+    this._store.pipe(select(a => a.appState.appMode), takeUntil(this._destroy$)).subscribe(appMode => {
       this.appMode = appMode;
       if (this.pixelGrid && this.pixelGrid.nativeElement) {
         this.pixelGrid.nativeElement.style.display = (appMode === 1 ? 'grid' : 'none');
