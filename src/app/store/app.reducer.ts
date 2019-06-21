@@ -161,10 +161,10 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             if (retrieveState()) {
                 const svc = new LZStringService();
                 var newState = JSON.parse(svc.decompress(retrieveState()));
-                return newState
+                return newState || initialState;
             }
             else {
-                return state;
+                return initialState;
             }
     }
 };
