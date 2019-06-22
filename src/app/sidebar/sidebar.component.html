@@ -62,16 +62,16 @@
       <div class="export-modal-container">
         <div class="export-options">
           <div class="export-option">
-            <input type="radio" [(ngModel)]="exportChoice" name="export-option" [value]="3"> Large
+            <input type="radio" [(ngModel)]="exportChoice" name="export-option" [value]="3"> Large (800x800)
           </div>
           <div class="export-option">
-            <input type="radio" [(ngModel)]="exportChoice" name="export-option" [value]="2"> Medium
+            <input type="radio" [(ngModel)]="exportChoice" name="export-option" [value]="2"> Medium (400x400)
           </div>
           <div class="export-option">
-            <input type="radio"[(ngModel)]="exportChoice" name="export-option" [value]="1"> Small
+            <input type="radio"[(ngModel)]="exportChoice" name="export-option" [value]="1"> Small (200x200)
           </div>
           <div class="export-option">
-            <input type="radio" [(ngModel)]="exportChoice" name="export-option" [value]="0"> Actual Size
+            <input type="radio" [(ngModel)]="exportChoice" name="export-option" [value]="0"> Actual Size ({{_gridSize}}x{{_gridSize}})
           </div>
         </div>
 
