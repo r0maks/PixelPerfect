@@ -124,7 +124,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
         case appActions.RESET:
             return returnState(initialState);
         case appActions.EXPORT_IMAGE: {
-            buildImage(state.size, state.pixels);
+            buildImage(state.size, state.pixels, 100);
             return returnState(state);
         }
         case appActions.BRUSH_SIZE_CHANGED:
@@ -153,7 +153,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 ...state,
                 gridSize: newSize
             });
-        case appActions.APP_CLOSED: 
+        case appActions.APP_CLOSED:
             returnAndPreserveState(state);
         default:
             if (retrieveState()) {
@@ -182,20 +182,31 @@ function saveNewState(previousStates: any[], newState: Pixel[]): any[] {
 }
 
 // Code should probably be in effects
-function buildImage(size: number, pixels: Pixel[]) {
+function buildImage(size: number, pixels: Pixel[], factor: number) {
+    const pixelsToRender = clone(pixels);
     var canvas = document.createElement('canvas');
-    canvas.height = size;
-    canvas.width = size;
+    const scaledSize = factor * size;
+    canvas.height = scaledSize;
+    canvas.width = scaledSize;
     // getting the context will allow to manipulate the image
     var context = canvas.getContext("2d");
 
+    // const scaledPixels = scalePixels(pixels, size, factor);
+    let scaledPixels = scaleApply(convertTo2d(pixelsToRender, size), factor);
+    const oneDPixels = convertTo1d(scaledPixels);
+
     // We create a new imageData.
-    var imageData = context.createImageData(size, size);
+    var imageData = context.createImageData(scaledSize, scaledSize);
     // The property data will contain an array of int8
     var data = imageData.data;
-    for (var i = 0; i < size * size; i++) {
-        const p = pixels[i];
-        const rgb = hexToRgb(p.color);
+    for (var i = 0; i < oneDPixels.length; i++) {
+        const p = oneDPixels[i];
+        let rgb;
+        if (!p) {
+            rgb = { r: 255, g: 255, b: 255 };
+        } else {
+            rgb = hexToRgb(p.color);
+        }
         data[i * 4 + 0] = rgb.r; // Red
         data[i * 4 + 1] = rgb.g; // Green
         data[i * 4 + 2] = rgb.b; // Blue
@@ -268,4 +279,31 @@ function returnAndPreserveState(state: State): State {
     const svc = new LZStringService();
     localStorage.setItem('state', svc.compress(JSON.stringify(state)));
     return state;
+}
+function convertTo2d(pixels: Pixel[], size: number): Pixel[][] {
+    const result = new Array<Array<Pixel>>();
+    while (pixels.length) result.push(pixels.splice(0, size));
+    return result;
+}
+function convertTo1d(pixels: Pixel[][]): Pixel[] {
+    let result = [];
+    for (var i = 0; i < pixels.length; i++) {
+        result = result.concat(pixels[i]);
+    }
+    return result;
+}
+
+function scaleApply(array, factor) {
+    let scaled = [];
+
+    for (const row of array) {
+        let x = [];
+
+        for (const item of row)
+            x = x.concat(Array(factor).fill(item));
+
+        scaled = scaled.concat(Array(factor).fill(x));
+    }
+
+    return scaled;
 }
