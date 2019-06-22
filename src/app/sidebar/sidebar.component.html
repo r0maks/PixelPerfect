@@ -62,16 +62,16 @@
       <div class="export-modal-container">
         <div class="export-options">
           <div class="export-option">
-            <input type="radio" name="export-option" value="large"> Large
+            <input type="radio" [(ngModel)]="exportChoice" name="export-option" [value]="3"> Large
           </div>
           <div class="export-option">
-            <input type="radio" name="export-option" value="med"> Medium
+            <input type="radio" [(ngModel)]="exportChoice" name="export-option" [value]="2"> Medium
           </div>
           <div class="export-option">
-            <input type="radio" name="export-option" value="small"> Small
+            <input type="radio"[(ngModel)]="exportChoice" name="export-option" [value]="1"> Small
           </div>
           <div class="export-option">
-            <input type="radio" name="export-option" value="actual"> Actual Size
+            <input type="radio" [(ngModel)]="exportChoice" name="export-option" [value]="0"> Actual Size
           </div>
         </div>
 
@@ -83,7 +83,6 @@
           <option>2</option>
           <option>3</option>
         </datalist> -->
-
 
         <div class="export-buttons">
           <button class="cancel-button shadow-box" (click)="closeExportModal()">Cancel</button>

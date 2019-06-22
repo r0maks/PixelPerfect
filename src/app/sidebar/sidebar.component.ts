@@ -21,6 +21,7 @@ export class SidebarComponent extends Destroyable implements OnInit {
   private _colorPickerOpen: boolean;
   public canUndo: boolean;
   public canRedo: boolean;
+  public exportChoice = 0;
 
   constructor(private _store: Store<AppState>, private _modalService: ModalService) {
     super();
@@ -57,9 +58,9 @@ export class SidebarComponent extends Destroyable implements OnInit {
   public openExportModal() {
     this._modalService.open('export-options-modal');
   }
-  public export(size: AppActions.ExportSize) {
+  public export() {
     this.closeExportModal();
-    this._store.dispatch(new AppActions.ExportImage(size));
+    this._store.dispatch(new AppActions.ExportImage(this.exportChoice));
   }
   public closeExportModal() {
     this._modalService.close('export-options-modal');

@@ -124,7 +124,7 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
         case appActions.RESET:
             return returnState(initialState);
         case appActions.EXPORT_IMAGE: {
-            buildImage(state.size, state.pixels, 100);
+            buildImage(state.size, state.pixels, getScaleFactor(action.config, state.size));
             return returnState(state);
         }
         case appActions.BRUSH_SIZE_CHANGED:
@@ -295,15 +295,27 @@ function convertTo1d(pixels: Pixel[][]): Pixel[] {
 
 function scaleApply(array, factor) {
     let scaled = [];
-
     for (const row of array) {
         let x = [];
-
         for (const item of row)
             x = x.concat(Array(factor).fill(item));
-
         scaled = scaled.concat(Array(factor).fill(x));
     }
-
     return scaled;
+}
+
+function getScaleFactor(config: appActions.ExportSize, size: number): number {
+    switch (config) {
+        // 200x200
+        case appActions.ExportSize.Small:
+            return Math.ceil(200/size);
+        // 400x400
+        case appActions.ExportSize.Medium:
+            return Math.ceil(400/size);
+        // 800x800
+        case appActions.ExportSize.Large:
+            return Math.ceil(800/size);
+        default:
+            return 1;
+    }
 }
