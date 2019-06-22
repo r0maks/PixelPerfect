@@ -2,7 +2,7 @@
   <div class="control-panel-container">
     <div class="brush-size-slider">
       <label>Brush size ({{_brushSize}}x{{_brushSize}})</label>
-      <input type="range" id="start" name="volume" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue" (input)="brushSizeChanged($event)">
+      <input type="range" id="start" name="volume" class="slider-square" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue" (input)="brushSizeChanged($event)">
     </div>
     <div class="undo-buttons">
       <button class="shadow-box undo-button" [disabled]="!canUndo" (click)="undo()">
@@ -23,7 +23,7 @@
   </div>
   <div class="color-container">
     <!-- <div class="current-color">{{_currentColor}}</div> -->
-    <div class="color-picker-box shadow-box" [(colorPicker)]="_currentColor" (cpToggleChange)="pickerState($event)" [cpPosition]="'bottom'"
+    <div class="color-picker-box shadow-box" [(colorPicker)]="_currentColor" [cpOutputFormat]="'hex'" (cpToggleChange)="pickerState($event)" [cpPosition]="'bottom'"
       (colorPickerClose)="colorChanged($event)" [style.background]="_currentColor">
       <i *ngIf="!_colorPickerOpen" class="fas fa-palette"></i>
       <span *ngIf="_colorPickerOpen">
@@ -62,16 +62,16 @@
       <div class="export-modal-container">
         <div class="export-options">
           <div class="export-option">
-            <input type="radio" name="export-option" value="male"> Large
+            <input type="radio" name="export-option" value="large"> Large
           </div>
           <div class="export-option">
-            <input type="radio" name="export-option" value="male"> Medium
+            <input type="radio" name="export-option" value="med"> Medium
           </div>
           <div class="export-option">
-            <input type="radio" name="export-option" value="male"> Small
+            <input type="radio" name="export-option" value="small"> Small
           </div>
           <div class="export-option">
-            <input type="radio" name="export-option" value="male"> Actual Size
+            <input type="radio" name="export-option" value="actual"> Actual Size
           </div>
         </div>
 

@@ -57,9 +57,9 @@ export class SidebarComponent extends Destroyable implements OnInit {
   public openExportModal() {
     this._modalService.open('export-options-modal');
   }
-  public export() {
+  public export(size: AppActions.ExportSize) {
     this.closeExportModal();
-    this._store.dispatch(new AppActions.ExportImage());
+    this._store.dispatch(new AppActions.ExportImage(size));
   }
   public closeExportModal() {
     this._modalService.close('export-options-modal');

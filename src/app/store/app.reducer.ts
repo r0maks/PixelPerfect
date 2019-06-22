@@ -18,7 +18,6 @@ export interface State {
     currentColor: string;
     palette: string[];
     backgroundColor: string;
-    sizeOptions: number[],
     gridSize: number,
     appMode: AppMode;
     brushSize: number;
@@ -30,7 +29,6 @@ export const initialState: State = {
     currentColor: '#000000',
     palette: ['#000000'],
     backgroundColor: '#fff',
-    sizeOptions: [8, 12, 16, 24, 32, 48, 64],
     gridSize: 720,
     appMode: 0,
     previousStates: [],

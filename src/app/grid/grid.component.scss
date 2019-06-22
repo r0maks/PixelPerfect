@@ -3,6 +3,7 @@
 .grid-container {
     border-radius: 4px;
     display: flex;
+    flex-direction: column;
 
     .grid-pixels {
         display: grid;

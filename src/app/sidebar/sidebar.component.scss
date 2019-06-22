@@ -57,6 +57,10 @@
         .brush-size-slider {
             display: flex;
             flex-direction: column;
+            .slider-square {
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
         }
 
         .undo-buttons {
@@ -125,6 +129,7 @@
         display: grid;
         grid-template-columns: 125px 125px;
         grid-gap: 10px;
+        margin: 0 auto;
         .export-button {
             background: #34495e;
         }

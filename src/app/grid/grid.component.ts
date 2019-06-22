@@ -22,7 +22,7 @@ export class GridComponent extends Destroyable implements OnInit, AfterViewInit 
   public appMode: number;
   public dimension: number;
   private _gridSize: number;
-  public sizeOptions: number[];
+  public sizeOptions = [8, 12, 16, 24, 32, 48, 64];
   public hoveredPixels: any;
   public focusedPixelId: string;
 
@@ -32,16 +32,13 @@ export class GridComponent extends Destroyable implements OnInit, AfterViewInit 
   ) {
     super();
   }
-
   public ngOnInit() {
     this.hoveredPixels = {};
     this._store.pipe(select(a => a.appState.pixels), takeUntil(this._destroy$)).subscribe(val => this.pixels = val);
-    this._store.pipe(select(a => a.appState.sizeOptions), takeUntil(this._destroy$)).subscribe(val => this.sizeOptions = val);
     this._store.pipe(select(a => a.appState.currentColor), takeUntil(this._destroy$)).subscribe(val => this._currentColor = val);
     this._store.pipe(select(a => a.appState.brushSize), takeUntil(this._destroy$)).subscribe(val => this.brushSize = val);
     this._store.pipe(select(a => a.appState.appMode), takeUntil(this._destroy$)).subscribe(appMode => { this.appMode = appMode });
   }
-
   public ngAfterViewInit() {
     this._store.pipe(select(a => a.appState.size), takeUntil(this._destroy$)).subscribe(val => {
       this.size = val;
@@ -62,16 +59,13 @@ export class GridComponent extends Destroyable implements OnInit, AfterViewInit 
     });
     this._changeDetectionRef.detectChanges();
   }
-
   public setSize(size: number) {
     this._store.dispatch(new AppActions.SetSize(size));
   }
-
   // TODO don't do this if the same color
   public setColor(pixel: Pixel) {
     this._store.dispatch(new AppActions.FillCell(pixel));
   }
-
   public hovered(pixel: Pixel) {
     this.hoveredPixels = {};
     this.focusedPixelId = pixel.id;
@@ -88,18 +82,14 @@ export class GridComponent extends Destroyable implements OnInit, AfterViewInit 
       }
     }
   }
-
   public isHovered(id: string): boolean {
     return this.hoveredPixels[id];
   }
-
   public hoverStopped() {
     this.hoveredPixels = {};
     this.focusedPixelId = null;
   }
-
   public trackByFn(index, item) {
     return index;
   }
-
 }

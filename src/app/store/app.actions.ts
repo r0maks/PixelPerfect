@@ -37,6 +37,7 @@ export class BrushSizeChanged implements Action {
 }
 export class ExportImage implements Action {
   readonly type = EXPORT_IMAGE;
+  constructor(public config: ExportSize) {}
 }
 export class Undo implements Action {
   readonly type = UNDO;
@@ -76,3 +77,10 @@ export type AppActions
   ColorPickerClosed |
   WindowResized | 
   AppClosed
+
+  export enum ExportSize {
+    Actual = 0,
+    Small = 1,
+    Medium = 2, 
+    Large = 3,
+}

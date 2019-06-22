@@ -1,8 +1,12 @@
 <div class="grid-container">
     <div class="grid-pixels" #pixelGrid (mouseout)="hoverStopped()">
-        <div class="grid-cell" *ngFor='let cell of pixels; let colIndex = index; trackBy: trackByFn' id="{{cell?.id}}" [ngStyle]="{'width.px': dimension, 'height.px':dimension, 'background' : isHovered(cell.id) ? _currentColor : cell.color}"
+        <div class="grid-cell" *ngFor='let cell of pixels; let colIndex = index; trackBy: trackByFn' id="{{cell?.id}}" 
+            [ngStyle]="{'width.px': dimension, 'height.px':dimension, 'background' : isHovered(cell.id) ? _currentColor : cell.color}"
             (click)="setColor(cell)" [ngClass]="{'pixel-hovered': focusedPixelId === cell.id}" (mouseover)="hovered(cell)">
         </div>
+    </div>
+    <div *ngIf="appMode === 1">
+        (Size: {{size}}x{{size}}) {{focusedPixelId}}
     </div>
     <div *ngIf="appMode === 0" class="size-picker-container">
         <span>Choose pixel grid dimensions to get started</span>
