@@ -5,11 +5,12 @@ import { saveAs } from 'file-saver';
 import { LZStringService } from 'ng-lz-string';
 import { AppState } from './reducers';
 
+const HISTORY_LIMIT = 5;
+
 export enum AppMode {
     Config = 0,
     Drawing = 1,
 }
-
 export interface State {
     size: number;
     previousStates: Pixel[][];
@@ -68,11 +69,13 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
                 prevStates = _.dropRight(prevStates, numToDrop);
             }
 
+            prevStates  = saveNewState(prevStates, pixels);
+
             return returnState({
                 ...state,
                 pixels: pixels,
-                previousStates: saveNewState(prevStates, pixels),
-                historyIndex: state.historyIndex + 1,
+                previousStates: prevStates,
+                historyIndex: prevStates.length - 1
             });
         case appActions.CHANGE_COLOR:
             if (state.currentColor === action.newColor) {
@@ -166,7 +169,6 @@ export const reducer: ActionReducer<State> = (state: State = initialState, actio
             }
     }
 };
-
 export class Pixel {
     public color: string; // hex color of the pixel
     public id: string;
@@ -174,13 +176,12 @@ export class Pixel {
         this.id = rowIndex + '-' + colIndex;
     }
 }
-
 function saveNewState(previousStates: any[], newState: Pixel[]): any[] {
-    const allStates = clone(previousStates);
+    const allStates = clone(_.takeRight(previousStates, HISTORY_LIMIT));
+    // TODO cut the array here to the max size
     allStates.push(clone(newState));
     return allStates;
 }
-
 // Code should probably be in effects
 function buildImage(size: number, pixels: Pixel[], factor: number) {
     const pixelsToRender = clone(pixels);
@@ -292,7 +293,6 @@ function convertTo1d(pixels: Pixel[][]): Pixel[] {
     }
     return result;
 }
-
 function scaleApply(array, factor) {
     let scaled = [];
     for (const row of array) {
@@ -303,7 +303,6 @@ function scaleApply(array, factor) {
     }
     return scaled;
 }
-
 function getScaleFactor(config: appActions.ExportSize, size: number): number {
     switch (config) {
         // 200x200
