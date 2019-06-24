@@ -13,12 +13,12 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class SidebarComponent extends Destroyable implements OnInit {
 
-  private _currentColor: string;
-  private _usedColors: string[];
-  private _brushSize: number;
-  private _gridSize: number;
+  public _currentColor: string;
+  public _usedColors: string[];
+  public _brushSize: number;
+  public _gridSize: number;
   public sliderValue: number;
-  private _colorPickerOpen: boolean;
+  public _colorPickerOpen: boolean;
   public canUndo: boolean;
   public canRedo: boolean;
   public exportChoice = 0;

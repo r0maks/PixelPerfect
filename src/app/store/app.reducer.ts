@@ -1,5 +1,5 @@
 import * as appActions from './app.actions';
-import { ActionReducer, Action } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import * as _ from 'lodash';
 import { saveAs } from 'file-saver';
 import { LZStringService } from 'ng-lz-string';
@@ -37,7 +37,7 @@ export const initialState: State = {
     brushSize: 1,
     colorPickerOpen: false,
 };
-export const reducer: ActionReducer<State> = (state: State = initialState, action: appActions.AppActions) => {
+export function reducer(state: State = initialState, action: appActions.AppActions) {
     switch (action.type) {
         // create pixel grid from the specified size
         case appActions.SET_SIZE:
