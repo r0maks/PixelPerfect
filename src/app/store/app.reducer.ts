@@ -135,6 +135,16 @@ export function reducer(state: State = initialState, action: appActions.AppActio
                 ...state,
                 brushSize: action.size,
             });
+        case appActions.INCREMENT_BRUSH_SIZE:
+        return returnState({
+            ...state,
+            brushSize: state.brushSize >= state.size ? state.brushSize : state.brushSize + 1
+        });
+        case appActions.DECREMENT_BRUSH_SIZE:
+        return returnState({
+            ...state,
+            brushSize: state.brushSize <= 1 ? state.brushSize : state.brushSize - 1
+        });
         case appActions.COLOR_PICKER_OPEN:
             return returnState({
                 ...state,

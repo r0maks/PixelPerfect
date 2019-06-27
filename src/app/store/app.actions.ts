@@ -6,6 +6,8 @@ export const FILL_CELL = 'FILL_CELL';
 export const CHANGE_COLOR = 'CHANGE_COLOR';
 export const USE_PRIOR_COLOR = 'USE_PRIOR_COLOR';
 export const BRUSH_SIZE_CHANGED = 'BRUSH_SIZE_CHANGED';
+export const INCREMENT_BRUSH_SIZE = 'INCREMENT_BRUSH_SIZE';
+export const DECREMENT_BRUSH_SIZE = 'DECREMENT_BRUSH_SIZE';
 export const EXPORT_IMAGE = 'EXPORT_IMAGE';
 export const UNDO = 'UNDO';
 export const REDO = 'REDO';
@@ -34,6 +36,12 @@ export class UsePriorColor implements Action {
 export class BrushSizeChanged implements Action {
   readonly type = BRUSH_SIZE_CHANGED;
   constructor(public size: number){}
+}
+export class IncrementBrushSize implements Action {
+  readonly type = INCREMENT_BRUSH_SIZE;
+}
+export class DecrementBrushSize implements Action {
+  readonly type = DECREMENT_BRUSH_SIZE;
 }
 export class ExportImage implements Action {
   readonly type = EXPORT_IMAGE;
@@ -69,6 +77,8 @@ export type AppActions
   ChangeColor | 
   UsePriorColor |
   BrushSizeChanged |
+  IncrementBrushSize |
+  DecrementBrushSize |
   ExportImage |
   Undo |
   Redo |

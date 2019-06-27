@@ -24,4 +24,22 @@ export class AppComponent implements AfterViewInit {
   unloadHandler($event) {
     this._store.dispatch(new AppActions.AppClosed());
   }
+  @HostListener('window:keyup', ['$event'])
+  onKeyUp($event: KeyboardEvent): void {
+    this.handleKeyEvents($event);
+    console.log($event);
+  }
+  handleKeyEvents($event: KeyboardEvent) {
+    let charCode = String.fromCharCode($event.which).toLowerCase();
+    if ($event.keyCode === 38) {
+      // Action on Cmd + S
+      this._store.dispatch(new AppActions.IncrementBrushSize());
+      $event.preventDefault();
+    }
+    if ($event.keyCode === 40) {
+      // Action on Cmd + S
+      this._store.dispatch(new AppActions.DecrementBrushSize());
+      $event.preventDefault();
+    }
+  }
 }
