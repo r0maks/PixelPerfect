@@ -8,11 +8,8 @@
         // height: 30px;
     }
     .center-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        app-sidebar {
-            margin-right: 10px;
-        }
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 4px;
     }
 }

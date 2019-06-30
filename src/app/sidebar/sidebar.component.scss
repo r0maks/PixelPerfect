@@ -5,86 +5,70 @@
     flex-direction: column;
     border-radius: 4px;
     border: solid 1px $nice-gray;
-    padding: 6px;
+    padding: 4px;
+    width: 84px;
     box-shadow: 0 12px 75px rgba(0,0,0,.125);
-
-    .color-container {
-        display: grid;
-        grid-template-rows: auto;
-        grid-gap: 4px;
-        margin-top: 5px;
-        .used-colors {
-            display: grid;
-            grid-template-rows: auto;
-            grid-gap: 2px;
-            .color-tile {
-                min-height: 25px;
-                min-width: 20px;
-                border-radius: 4px;
-                padding: 5px;
-                margin-bottom: 2px;
-                cursor: pointer;
-                box-shadow: inset 0 0 1px grey;
-                &-text {
-                    mix-blend-mode: difference;
-                    color: white;
-                }
-            }
-        }
-
-        .color-picker-box {
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            outline: none;
-            box-shadow: inset 0 0 1px grey;
-            display: flex;
-            justify-content: center;
-            padding: 15px;
-
-            i, span {
-                font-size: 20px;
-                mix-blend-mode: difference;
-                color: white;
-            }
-        }
-    }
-
     .control-panel-container {
         display: grid;
-        grid-template-rows: auto;
         grid-gap: 4px;
         .brush-size-slider {
             display: flex;
             flex-direction: column;
             .slider-square {
-                margin-bottom: 5px;
                 margin-top: 5px;
             }
         }
-
-        .undo-buttons {
-            display: grid;
-            grid-template-columns: 65px 65px;
-            grid-gap: 4px;
-
-            .undo-button {
-                background: #f1c40f;
-            }
-            .redo-button {
-                background: #2ecc71;
-            }
+        .undo-button {
+            background: #f1c40f;
         }
-
-        .reset-buttons {
+        .redo-button {
+            background: #2ecc71;
+        }
+        .reset-button {
+            background: #e74c3c;
+        }
+        .export-button {
+            background: #34495e;
+        }
+        .color-container {
             display: grid;
-            grid-template-columns: 65px 65px;
-            grid-gap: 4px;
-            .reset-button {
-                background: #e74c3c;
+            grid-template-rows: auto;
+            .used-colors {
+                display: grid;
+                grid-template-rows: auto;
+                .color-tile {
+                    min-height: 25px;
+                    min-width: 20px;
+                    border-radius: 4px;
+                    padding: 4px;
+                    margin-top: 4px;
+                    cursor: pointer;
+                    box-shadow: inset 0 0 1px grey;
+                    &-text {
+                        mix-blend-mode: difference;
+                        color: white;
+                    }
+                    &-selected {
+                        border-left: solid #2ecc71 8px;
+                    }
+                }
             }
-            .export-button {
-                background: #34495e;
+    
+            .color-picker-box {
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                outline: none;
+                box-shadow: inset 0 0 1px grey;
+                display: flex;
+                justify-content: center;
+                padding: 15px;
+    
+                i, span {
+                    font-size: 20px;
+                    mix-blend-mode: difference;
+                    color: white;
+                }
             }
         }
     }

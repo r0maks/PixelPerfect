@@ -7,8 +7,9 @@ body {
     font-weight: 300;
     font-style: normal;
     margin: 0px;
-    // display: flex;
-    // justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 main {
     padding: 5px;
