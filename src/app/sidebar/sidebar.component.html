@@ -27,7 +27,7 @@
       </div>
 
       <div class="used-colors">
-        <div class="color-tile shadow-box" [ngClass]="{'color-tile-selected': color === _currentColor}" *ngFor='let color of _usedColors?.slice()?.reverse()' [ngStyle]="{'background' : color}"
+        <div class="color-tile" [ngClass]="{'color-tile-selected': color === _currentColor}" *ngFor='let color of _usedColors?.slice()?.reverse()' [ngStyle]="{'background' : color}"
           (click)="setColor(color)">
           <span class="color-tile-text">{{color}}</span>
         </div>
