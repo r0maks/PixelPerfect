@@ -1,10 +1,5 @@
 <div class="sidebar-container">
   <div class="control-panel-container">
-    <!-- <div class="brush-size-slider">
-      <label>Brush size ({{_brushSize}}x{{_brushSize}})</label>
-      <input type="range" id="start" name="volume" class="slider-square" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue"
-        (input)="brushSizeChanged($event)">
-    </div> -->
     <button class="shadow-box undo-button" [disabled]="!canUndo" (click)="undo()">
       <i class="fas fa-undo"></i>
     </button>
@@ -17,18 +12,23 @@
     <button class="shadow-box export-button" (click)="openExportModal()">
       <i class="fas fa-download"></i>
     </button>
+    <div class="brush-size-slider">
+        <span><i class="fas fa-brush"></i>&nbsp;&nbsp;Size ({{_brushSize}})</span>
+        <input type="range" id="start" name="volume" class="slider-square" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue"
+          (input)="brushSizeChanged($event)">
+    </div>
     <div class="color-container">
-      <!-- <div class="current-color">{{_currentColor}}</div> -->
       <div class="color-picker-box shadow-box" [(colorPicker)]="_currentColor" [cpOutputFormat]="'hex'" (cpToggleChange)="pickerState($event)"
         [cpPosition]="'bottom'" (colorPickerClose)="colorChanged($event)" [style.background]="_currentColor">
         <i *ngIf="!_colorPickerOpen" class="fas fa-palette"></i>
         <span *ngIf="_colorPickerOpen">
-          <i class="fas fa-times"></i></span>
+          <i class="fas fa-times"></i>
+        </span>
       </div>
 
       <div class="used-colors">
-        <div class="color-tile" [ngClass]="{'color-tile-selected': color === _currentColor}" *ngFor='let color of _usedColors?.slice()?.reverse()' [ngStyle]="{'background' : color}"
-          (click)="setColor(color)">
+        <div class="color-tile" [ngClass]="{'color-tile-selected': color === _currentColor}" *ngFor='let color of _usedColors?.slice()?.reverse()'
+          [ngStyle]="{'background' : color}" (click)="setColor(color)">
           <span class="color-tile-text">{{color}}</span>
         </div>
       </div>

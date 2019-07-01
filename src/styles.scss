@@ -31,7 +31,7 @@ app-root {
 header {
     height: 50px;
     background: $red;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 
     .header-container {
         max-width: 1160px;
@@ -187,7 +187,7 @@ input[type=range] {
   input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
+    width: 10px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
     background: #3498db; /* Green background */
     cursor: pointer; /* Cursor on hover */
@@ -195,7 +195,7 @@ input[type=range] {
   }
   
   input[type=range]::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
+    width: 10px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
     background: #3498db; /* Green background */
     border-radius: 4px;

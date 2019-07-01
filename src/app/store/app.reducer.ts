@@ -69,7 +69,7 @@ export function reducer(state: State = initialState, action: appActions.AppActio
                 prevStates = _.dropRight(prevStates, numToDrop);
             }
 
-            prevStates  = saveNewState(prevStates, pixels);
+            prevStates = saveNewState(prevStates, pixels);
 
             return returnState({
                 ...state,
@@ -136,15 +136,15 @@ export function reducer(state: State = initialState, action: appActions.AppActio
                 brushSize: action.size,
             });
         case appActions.INCREMENT_BRUSH_SIZE:
-        return returnState({
-            ...state,
-            brushSize: state.brushSize >= state.size ? state.brushSize : state.brushSize + 1
-        });
+            return returnState({
+                ...state,
+                brushSize: state.brushSize >= state.size ? state.brushSize : state.brushSize + 1
+            });
         case appActions.DECREMENT_BRUSH_SIZE:
-        return returnState({
-            ...state,
-            brushSize: state.brushSize <= 1 ? state.brushSize : state.brushSize - 1
-        });
+            return returnState({
+                ...state,
+                brushSize: state.brushSize <= 1 ? state.brushSize : state.brushSize - 1
+            });
         case appActions.COLOR_PICKER_OPEN:
             return returnState({
                 ...state,
@@ -317,13 +317,13 @@ function getScaleFactor(config: appActions.ExportSize, size: number): number {
     switch (config) {
         // 200x200
         case appActions.ExportSize.Small:
-            return Math.ceil(200/size);
+            return Math.ceil(200 / size);
         // 400x400
         case appActions.ExportSize.Medium:
-            return Math.ceil(400/size);
+            return Math.ceil(400 / size);
         // 800x800
         case appActions.ExportSize.Large:
-            return Math.ceil(800/size);
+            return Math.ceil(800 / size);
         default:
             return 1;
     }
