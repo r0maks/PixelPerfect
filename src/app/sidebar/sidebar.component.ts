@@ -81,4 +81,7 @@ export class SidebarComponent extends Destroyable implements OnInit {
   public closeConfirmModal() {
     this._modalService.close('reset-confirm-modal');
   }
+  public randomizePalette() {
+    this._store.dispatch(new AppActions.RandomizePalette());
+  }
 }

@@ -4,6 +4,7 @@ import { Pixel } from './app.reducer';
 export const SET_SIZE = 'SET_SIZE'
 export const FILL_CELL = 'FILL_CELL';
 export const CHANGE_COLOR = 'CHANGE_COLOR';
+export const RANDOMIZE_PALETTE = 'RANDOMIZE_PALETTE';
 export const USE_PRIOR_COLOR = 'USE_PRIOR_COLOR';
 export const BRUSH_SIZE_CHANGED = 'BRUSH_SIZE_CHANGED';
 export const INCREMENT_BRUSH_SIZE = 'INCREMENT_BRUSH_SIZE';
@@ -28,6 +29,9 @@ export class FillCell implements Action {
 export class ChangeColor implements Action {
   readonly type = CHANGE_COLOR;
   constructor(public newColor: string) {}
+}
+export class RandomizePalette implements Action {
+  readonly type = RANDOMIZE_PALETTE;
 }
 export class UsePriorColor implements Action {
   readonly type = USE_PRIOR_COLOR;
@@ -74,9 +78,10 @@ export type AppActions
   = 
   SetSize |
   FillCell |
-  ChangeColor | 
+  ChangeColor |
   UsePriorColor |
   BrushSizeChanged |
+  RandomizePalette |
   IncrementBrushSize |
   DecrementBrushSize |
   ExportImage |

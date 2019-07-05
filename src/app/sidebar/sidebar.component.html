@@ -1,24 +1,40 @@
 <div class="sidebar-container">
   <div class="control-panel-container">
-    <button class="shadow-box undo-button" [disabled]="!canUndo" (click)="undo()">
-      <i class="fas fa-undo"></i>
-    </button>
-    <button class="shadow-box redo-button" [disabled]="!canRedo" (click)="redo()">
-      <i class="fas fa-redo"></i>
-    </button>
-    <button class="shadow-box reset-button" (click)="reset()">
-      <i class="fas fa-trash"></i>
-    </button>
-    <button class="shadow-box export-button" (click)="openExportModal()">
-      <i class="fas fa-download"></i>
-    </button>
+
+    <div class="button-row">
+      <button class="shadow-box undo-button" [disabled]="!canUndo" (click)="undo()">
+        <i class="fas fa-undo"></i>
+      </button>
+      <button class="shadow-box redo-button" [disabled]="!canRedo" (click)="redo()">
+        <i class="fas fa-redo"></i>
+      </button>
+    </div>
+
+    <div class="button-row">
+      <button class="shadow-box reset-button" (click)="reset()">
+        <i class="fas fa-trash"></i>
+      </button>
+      <button class="shadow-box export-button" (click)="openExportModal()">
+        <i class="fas fa-download"></i>
+      </button>
+    </div>
+
     <hr>
     <div class="brush-size-slider">
-        <span><i class="fas fa-brush"></i>&nbsp;&nbsp;Size ({{_brushSize}})</span>
-        <input type="range" id="start" name="volume" class="slider-square" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue"
-          (input)="brushSizeChanged($event)">
+      <span>
+        <i class="fas fa-brush"></i>&nbsp;&nbsp;Size ({{_brushSize}})</span>
+      <input type="range" id="start" name="volume" class="slider-square" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue"
+        (input)="brushSizeChanged($event)">
     </div>
-    <hr>
+    <div class="button-row">
+      <button class="shadow-box random-palette-button" (click)="randomizePalette()">
+        <i class="fas fa-random"></i>
+      </button>
+      <button class="shadow-box eyedrop-button" (click)="randomizePalette()">
+        <i class="fas fa-eye-dropper"></i>
+      </button>
+    </div>
+
     <div class="color-container">
       <div class="color-picker-box shadow-box" [(colorPicker)]="_currentColor" [cpOutputFormat]="'hex'" (cpToggleChange)="pickerState($event)"
         [cpPosition]="'bottom'" (colorPickerClose)="colorChanged($event)" [style.background]="_currentColor">

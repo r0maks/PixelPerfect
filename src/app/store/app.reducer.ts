@@ -92,6 +92,13 @@ export function reducer(state: State = initialState, action: appActions.AppActio
                 currentColor: action.newColor,
                 palette: colors,
             });
+        case appActions.RANDOMIZE_PALETTE:
+            const newPallette = getRandomColors(10);
+            return returnState({
+                ...state,
+                palette: newPallette,
+                currentColor: newPallette[9],
+            });
         case appActions.USE_PRIOR_COLOR:
             if (state.currentColor === action.color) {
                 return { ...state };
@@ -327,4 +334,15 @@ function getScaleFactor(config: appActions.ExportSize, size: number): number {
         default:
             return 1;
     }
+}
+function  getRandomColor(): string {
+    var color = Math.floor(0x1000000 * Math.random()).toString(16);
+    return '#' + ('000000' + color).slice(-6);
+}
+function getRandomColors(count: number): string[] {
+    const colors = [];
+    for (let index = 0; index < count; index++) {
+        colors.push(getRandomColor());
+    }
+    return colors;
 }
