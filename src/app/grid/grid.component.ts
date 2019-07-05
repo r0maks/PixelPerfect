@@ -25,6 +25,7 @@ export class GridComponent extends Destroyable implements OnInit, AfterViewInit 
   public sizeOptions = [8, 12, 16, 24, 32, 48, 64];
   public hoveredPixels: any;
   public focusedPixelId: string;
+  public _eyeDropperMode: boolean;
 
   constructor(
     private _store: Store<AppState>,
@@ -34,6 +35,7 @@ export class GridComponent extends Destroyable implements OnInit, AfterViewInit 
   }
   public ngOnInit() {
     this.hoveredPixels = {};
+    this._store.pipe(select(a => a.appState.eyeDropperMode), takeUntil(this._destroy$)).subscribe(val => this._eyeDropperMode = val);
     this._store.pipe(select(a => a.appState.pixels), takeUntil(this._destroy$)).subscribe(val => this.pixels = val);
     this._store.pipe(select(a => a.appState.currentColor), takeUntil(this._destroy$)).subscribe(val => this._currentColor = val);
     this._store.pipe(select(a => a.appState.brushSize), takeUntil(this._destroy$)).subscribe(val => this.brushSize = val);
@@ -62,12 +64,21 @@ export class GridComponent extends Destroyable implements OnInit, AfterViewInit 
   public setSize(size: number) {
     this._store.dispatch(new AppActions.SetSize(size));
   }
-  // TODO don't do this if the same color
-  public setColor(pixel: Pixel) {
-    this._store.dispatch(new AppActions.FillCell(pixel));
+
+  public cellClicked(pixel: Pixel) {
+    if (this._eyeDropperMode) {
+      this._store.dispatch(new AppActions.EyeDropperCellClick(pixel));
+    } else {
+      this._store.dispatch(new AppActions.FillCell(pixel));
+    }
   }
   public hovered(pixel: Pixel) {
     this.hoveredPixels = {};
+
+    if (this._eyeDropperMode) {
+      return;
+    }
+
     this.focusedPixelId = pixel.id;
     const range = this.brushSize - 1;
     const minCol = pixel.colIndex;

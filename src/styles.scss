@@ -88,6 +88,10 @@ button {
     }
 }
 
+button.pressed {
+    box-shadow: inset 0 0 15px #7f8c8d !important;
+}
+
 /* MODAL STYLES
 -------------------------------*/
 modal {

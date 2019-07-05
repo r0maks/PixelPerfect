@@ -5,6 +5,8 @@ export const SET_SIZE = 'SET_SIZE'
 export const FILL_CELL = 'FILL_CELL';
 export const CHANGE_COLOR = 'CHANGE_COLOR';
 export const RANDOMIZE_PALETTE = 'RANDOMIZE_PALETTE';
+export const TOGGLE_EYEDROPPER = 'TOGGLE_EYEDROPPER';
+export const EYE_DROPPER_CELL_CLICK = 'EYE_DROPPER_CELL_CLICK';
 export const USE_PRIOR_COLOR = 'USE_PRIOR_COLOR';
 export const BRUSH_SIZE_CHANGED = 'BRUSH_SIZE_CHANGED';
 export const INCREMENT_BRUSH_SIZE = 'INCREMENT_BRUSH_SIZE';
@@ -36,6 +38,13 @@ export class RandomizePalette implements Action {
 export class UsePriorColor implements Action {
   readonly type = USE_PRIOR_COLOR;
   constructor(public color: string) {}
+}
+export class ToggleEyeDropper implements Action {
+  readonly type = TOGGLE_EYEDROPPER;
+}
+export class EyeDropperCellClick implements Action {
+  readonly type = EYE_DROPPER_CELL_CLICK;
+  constructor(public pixel: Pixel) { }
 }
 export class BrushSizeChanged implements Action {
   readonly type = BRUSH_SIZE_CHANGED;
@@ -79,7 +88,9 @@ export type AppActions
   SetSize |
   FillCell |
   ChangeColor |
+  EyeDropperCellClick |
   UsePriorColor |
+  ToggleEyeDropper |
   BrushSizeChanged |
   RandomizePalette |
   IncrementBrushSize |

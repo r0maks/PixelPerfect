@@ -30,7 +30,7 @@
       <button class="shadow-box random-palette-button" (click)="randomizePalette()">
         <i class="fas fa-random"></i>
       </button>
-      <button class="shadow-box eyedrop-button" (click)="randomizePalette()">
+      <button class="shadow-box eyedrop-button" [ngClass]="{'pressed': _eyeDropperMode}" (click)="toggleEyeDropper()">
         <i class="fas fa-eye-dropper"></i>
       </button>
     </div>

@@ -19,6 +19,7 @@ export class SidebarComponent extends Destroyable implements OnInit {
   public _gridSize: number;
   public sliderValue: number;
   public _colorPickerOpen: boolean;
+  public _eyeDropperMode: boolean;
   public canUndo: boolean;
   public canRedo: boolean;
   public exportChoice = 0;
@@ -34,6 +35,7 @@ export class SidebarComponent extends Destroyable implements OnInit {
       this._brushSize = val;
       this.sliderValue = val;
     });
+    this._store.pipe(select(a => a.appState.eyeDropperMode), takeUntil(this._destroy$)).subscribe(val => this._eyeDropperMode = val);
     this._store.pipe(select(a => a.appState.size), takeUntil(this._destroy$)).subscribe(val => this._gridSize = val);
     this._store.pipe(select(a => a.appState.colorPickerOpen), takeUntil(this._destroy$)).subscribe(val => this._colorPickerOpen = val);
     this._store.pipe(select(a => a.appState.historyIndex), takeUntil(this._destroy$)).subscribe(val => this.canUndo = val == 0 ? false : true);
@@ -83,5 +85,8 @@ export class SidebarComponent extends Destroyable implements OnInit {
   }
   public randomizePalette() {
     this._store.dispatch(new AppActions.RandomizePalette());
+  }
+  public toggleEyeDropper() {
+    this._store.dispatch(new AppActions.ToggleEyeDropper());
   }
 }

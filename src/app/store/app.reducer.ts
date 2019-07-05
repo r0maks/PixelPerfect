@@ -23,6 +23,7 @@ export interface State {
     appMode: AppMode;
     brushSize: number;
     colorPickerOpen: boolean;
+    eyeDropperMode: boolean;
 };
 export const initialState: State = {
     size: null,
@@ -36,6 +37,7 @@ export const initialState: State = {
     historyIndex: 0,
     brushSize: 1,
     colorPickerOpen: false,
+    eyeDropperMode: false,
 };
 export function reducer(state: State = initialState, action: appActions.AppActions) {
     switch (action.type) {
@@ -82,15 +84,33 @@ export function reducer(state: State = initialState, action: appActions.AppActio
                 return { ...state };
             }
             // take the last 9 colors
-            let colors = clone(state.palette);
-            if (state.palette.length > 9) {
-                colors = clone(state.palette.slice(1));
-            }
-            colors.push(action.newColor);
+            let colors = addColorToPalette(action.newColor, state.palette);
             return returnState({
                 ...state,
                 currentColor: action.newColor,
                 palette: colors,
+            });
+        case appActions.TOGGLE_EYEDROPPER: 
+            return returnState({
+                ...state,
+                eyeDropperMode: !state.eyeDropperMode
+            });
+        case appActions.EYE_DROPPER_CELL_CLICK:
+
+            const newColor = action.pixel.color;
+
+            if (!newColor) {
+                return returnState({
+                    ...state
+                });
+            }
+
+            let newColors = addColorToPalette(newColor, state.palette);
+            return returnState({
+                ...state,
+                eyeDropperMode: !state.eyeDropperMode,
+                currentColor: newColor,
+                palette: newColors,
             });
         case appActions.RANDOMIZE_PALETTE:
             const newPallette = getRandomColors(10);
@@ -266,7 +286,6 @@ function hexToRgb(hex) {
 function getCellsToFill(pixels: Pixel[], pixel: Pixel, brushSize: number): Pixel[] {
     const range = brushSize - 1;
     let pixelsToFill = new Array<Pixel>();
-
     // normal draw
     if (range === 0) {
         pixelsToFill.push(pixels.find(a => a.id === pixel.id));
@@ -345,4 +364,24 @@ function getRandomColors(count: number): string[] {
         colors.push(getRandomColor());
     }
     return colors;
+}
+
+function colorIsInPallete(color: string, palette: string[]): boolean {
+    return palette.includes(color);
+}
+
+// adds color to palette if not already there
+function addColorToPalette(color: string, palette: string[]) {
+    let newPalette = clone(palette);
+
+    if (colorIsInPallete(color, newPalette)) {
+        return newPalette
+    }
+
+    if (newPalette.length > 9) {
+        newPalette = newPalette.slice(1);
+    }
+
+    newPalette.push(color);
+    return newPalette;
 }
