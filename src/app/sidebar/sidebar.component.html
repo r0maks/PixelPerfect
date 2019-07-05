@@ -12,11 +12,13 @@
     <button class="shadow-box export-button" (click)="openExportModal()">
       <i class="fas fa-download"></i>
     </button>
+    <hr>
     <div class="brush-size-slider">
         <span><i class="fas fa-brush"></i>&nbsp;&nbsp;Size ({{_brushSize}})</span>
         <input type="range" id="start" name="volume" class="slider-square" min="1" max="{{_gridSize}}" [(ngModel)]="sliderValue"
           (input)="brushSizeChanged($event)">
     </div>
+    <hr>
     <div class="color-container">
       <div class="color-picker-box shadow-box" [(colorPicker)]="_currentColor" [cpOutputFormat]="'hex'" (cpToggleChange)="pickerState($event)"
         [cpPosition]="'bottom'" (colorPickerClose)="colorChanged($event)" [style.background]="_currentColor">
