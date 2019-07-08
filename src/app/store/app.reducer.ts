@@ -6,6 +6,7 @@ import { LZStringService } from 'ng-lz-string';
 import { AppState } from './reducers';
 
 const HISTORY_LIMIT = 5;
+const BG_COLOR = '#ffffff';
 
 export enum AppMode {
     Config = 0,
@@ -30,7 +31,7 @@ export const initialState: State = {
     pixels: null,
     currentColor: '#000000',
     palette: ['#000000'],
-    backgroundColor: '#fff',
+    backgroundColor: BG_COLOR,
     gridSize: 720,
     appMode: 0,
     previousStates: [],
@@ -97,12 +98,10 @@ export function reducer(state: State = initialState, action: appActions.AppActio
             });
         case appActions.EYE_DROPPER_CELL_CLICK:
 
-            const newColor = action.pixel.color;
+            let newColor = action.pixel.color;
 
             if (!newColor) {
-                return returnState({
-                    ...state
-                });
+                newColor = BG_COLOR;
             }
 
             let newColors = addColorToPalette(newColor, state.palette);

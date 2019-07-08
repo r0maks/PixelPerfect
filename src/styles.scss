@@ -227,5 +227,9 @@ input[type=range] {
     100% { background-position: 0% 0% }
   }
 
+  .eyedropper-cursor {
+    cursor: url(/assets/eye-dropper-solid.png), auto !important;
+}
+
 
 
