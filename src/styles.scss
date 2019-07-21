@@ -52,14 +52,18 @@ main {
     .showcase-container {
         background:#ecf0f1;
         padding: 20px;
-        padding-top: 50px;
         //height: 200px;
         .showcase-img-container {
             display: grid;
-            grid-template-columns: auto auto auto auto;
+            grid-template-columns: auto auto auto auto auto auto;
+            grid-gap: 20px;
             .showcase-img {
-                height: 250px;
-                background:#7f8c8d
+                display: flex;
+                justify-content: center;
+                img {
+                    height: 200px;
+                    width: auto;
+                }
             }
         }
     }
@@ -79,7 +83,7 @@ header {
         margin: 0 auto;
         font-size: 30px;
         font-weight: 600;
-        color: #ecf0f1;
+        color: #ecf0f1 !important;
         display: flex;
     }
 }
