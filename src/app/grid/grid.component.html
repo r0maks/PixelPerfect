@@ -8,7 +8,7 @@
         (Size: {{size}}x{{size}}) {{focusedPixelId}}
     </div>
     <div *ngIf="appMode === 0" class="size-picker-container">
-        <span>Choose pixel grid dimensions to get started</span>
+        <span class="choose-text">Choose pixel grid dimensions to get started</span>
         <div class="size-picker-options-container">
             <div class="size-option shadow-box" *ngFor='let size of sizeOptions' (click)="setSize(size)">
                 <div class="size-option-dimension">

@@ -4,6 +4,7 @@
     border-radius: 4px;
     display: flex;
     flex-direction: column;
+    font-weight: 700;
 
     .grid-pixels {
         display: grid;
@@ -25,6 +26,9 @@
         display: grid;
         grid-gap: 15px;
         grid-template-rows: auto auto;
+        .choose-text {
+            color: #34495e;
+        }
         span {
             font-size: 26px;
         }
@@ -37,7 +41,7 @@
                 border-radius: 4px;
                 padding: 15px;
                 color: $white;
-                background: $dark-gray;
+                background: #2c3e50;
                 font-size: 20px;
                 text-align: center;            
     
