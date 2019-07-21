@@ -66,7 +66,14 @@
   <link rel="stylesheet" href="https://use.typekit.net/dtc2qsh.css">
   <script type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
 
-  <script></script>
+  <script>
+    function getStarted() {
+      var element = document.getElementById('siteContent');
+      element.style.display = 'none';
+      var app = document.getElementById('appRoot');
+      app.style.display = 'flex';
+    }
+  </script>
 
 </head>
 
@@ -84,16 +91,25 @@
         <div class="page-header-container">
           <span>Create awesome pixel art for free online!</span>
           <div class="get-started-button-container">
-            <button class="get-started-button shadow-box">START DRAWING</button>
+            <button class="get-started-button shadow-box" onclick="getStarted()">START DRAWING</button>
           </div>
         </div>
         <div class="showcase-container">
-
+          <div class="showcase-img-container">
+            <div class="showcase-img">
+            </div>
+            <div class="showcase-img">
+            </div>
+            <div class="showcase-img">
+            </div>
+            <div class="showcase-img">
+              </div>
+          </div>
         </div>
       </div>
 
 
-      <app-root></app-root>
+      <app-root id="appRoot"></app-root>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
       <!-- Pixel-side -->
       <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8779872502876746" data-ad-slot="1622208940" data-ad-format="auto"
