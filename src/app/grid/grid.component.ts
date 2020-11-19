@@ -100,7 +100,7 @@ export class GridComponent extends Destroyable implements OnInit, AfterViewInit 
     this.hoveredPixels = {};
     this.focusedPixelId = null;
   }
-  public trackByFn(index, item) {
-    return index;
+  public trackByFn(index, item: Pixel) {
+    return item.id;
   }
 }

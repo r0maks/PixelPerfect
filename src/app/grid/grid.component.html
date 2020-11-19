@@ -1,7 +1,10 @@
 <div class="grid-container">
     <div class="grid-pixels" #pixelGrid (mouseout)="hoverStopped()">
-        <div class="grid-cell" *ngFor='let cell of pixels; let colIndex = index; trackBy: trackByFn' id="{{cell?.id}}" [ngStyle]="{'width.px': dimension, 'height.px':dimension, 'background' : isHovered(cell.id) ? _currentColor : cell.color}"
-            (click)="cellClicked(cell)" [ngClass]="{'pixel-hovered': focusedPixelId === cell.id, 'eyedropper-cursor': _eyeDropperMode}" (mouseover)="hovered(cell)">
+        <div class="grid-cell"
+            *ngFor='let cell of pixels; let colIndex = index; trackBy: trackByFn' [id]="cell.id" [ngStyle]="{'width.px': dimension, 'height.px':dimension, 'background' : isHovered(cell.id) ? _currentColor : cell.color}"
+            (click)="cellClicked(cell)"
+            [ngClass]="{'pixel-hovered': focusedPixelId === cell.id, 'eyedropper-cursor': _eyeDropperMode}"
+            (mouseover)="hovered(cell)">
         </div>
     </div>
     <div class="grid-footer" *ngIf="appMode === 1">

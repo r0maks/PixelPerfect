@@ -1,8 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import "/app/palette.scss";
 
 body {
-    background: #34495e;
     font-family: menco, sans-serif;
     font-weight: 300;
     font-style: normal;
@@ -273,7 +271,7 @@ input[type=range] {
   }
 
   .eyedropper-cursor {
-    cursor: url(/assets/eye-dropper-solid.png), auto !important;
+    cursor: url(/assets/eye-dropper-solid-half.png), auto !important;
 }
 
 
