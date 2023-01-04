@@ -16,14 +16,6 @@ phases:
     commands:
         - echo Build started 
         - ng build --prod
-  post_build:
-    commands:
-      - echo build process finished, we should upload to S3 now
-      - ls 
-      - cd dist/
-      - ls -la
-    #   - aws s3 sync . s3://www.pixelplay.app --delete
-      - aws cloudfront create-invalidation --distribution-id=myid--paths '/*
 artifacts:
     files:
         - '**/*'
