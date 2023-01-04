@@ -75,16 +75,20 @@ app-root {
 }
 
 header {
-    height: 50px;
     background-image: -webkit-linear-gradient(46deg,  #2c3e50, #34495e);
 
     .header-container {
         max-width: 1160px;
         margin: 0 auto;
-        font-size: 30px;
+        font-size: 34px;
         font-weight: 600;
         color: #ecf0f1 !important;
         display: flex;
+        padding: 18px;
+
+        span {
+            margin-left: -6px;
+        }
     }
 }
 
@@ -98,6 +102,7 @@ footer {
     left: 0;
     bottom: 0;
     z-index: 989;
+    position: absolute;
 }
 
 /////// Global styles
