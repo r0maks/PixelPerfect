@@ -43,10 +43,10 @@
     "moment": "^2.24.0",
     "ng-lz-string": "^1.5.3",
     "ngx-color-picker": "^7.5.0",
-    "node-sass": "^4.12.0",
     "pnglib-es6": "^1.0.1",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
+    "sass": "^1.57.1",
     "tslib": "^1.10.0",
     "webpack": "^4.35.0",
     "zone.js": "~0.9.1"
@@ -74,6 +74,6 @@
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~3.4.5",
-    "webpack-cli": "2.1.2"
+    "webpack-cli": "5.0.1"
   }
 }
