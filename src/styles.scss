@@ -8,6 +8,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    background: #D5DFE5;
 }
 main {
     min-height: 420px;
@@ -24,13 +25,12 @@ main {
         justify-content: center;
         padding: 50px;
         flex-direction: column;
-        background: #34495e;
+        background: #222222;
         font-weight: 600;
         text-align: center;
         font-size: 50px;
         background-image: linear-gradient(rgba(189, 195, 199, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(189, 195, 199, 0.1) 1px, transparent 1px);
         background-size: 30px 30px;
-        border-bottom: 2px solid #e74c3c;
 
         .get-started-button-container {
             .get-started-button {
@@ -50,7 +50,6 @@ main {
     .showcase-container {
         background:#ecf0f1;
         padding: 20px;
-        border-bottom: 2px solid #e74c3c;
         box-shadow: 0 12px 75px rgba(0,0,0,.125);
         //height: 200px;
         .showcase-img-container {
@@ -75,7 +74,8 @@ app-root {
 }
 
 header {
-    background-image: -webkit-linear-gradient(46deg,  #2c3e50, #34495e);
+    background-color:#E74C3C;
+    // background-image: -webkit-linear-gradient(46deg,  #2c3e50, #34495e);
 
     .header-container {
         max-width: 1160px;
@@ -103,6 +103,12 @@ footer {
     bottom: 0;
     z-index: 989;
     position: absolute;
+}
+
+.ad-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 /////// Global styles
